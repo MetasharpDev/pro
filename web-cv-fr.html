@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <title>Audric THEVENET — Technology & Engineering Executive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white:#ffffff; --black:#0b1020;
+      --g50:#f7f8fb; --g100:#eef1f6; --g200:#dde3ee;
+      --g400:#8892a6; --g600:#516076;
+      --border:rgba(11,16,32,0.08); --borderM:rgba(11,16,32,0.14);
+      --blue:#2563eb; --blue2:#60a5fa; --green:#22c55e;
+      --ink:#2d3748;
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; background:var(--white); color:var(--black); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+
+    nav { position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:300; display:flex; align-items:center; height:44px; padding:0 6px; background:rgba(255,255,255,0.92); backdrop-filter:blur(24px); border:1px solid var(--borderM); border-radius:100px; box-shadow:0 4px 24px rgba(0,0,0,0.07); white-space:nowrap; }
+    .nav-logo { display:flex; align-items:center; gap:0.5rem; padding:0 1rem; font-size:0.85rem; font-weight:700; letter-spacing:-0.03em; color:var(--black); text-decoration:none; }
+    .nav-pulse { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 0 3px rgba(34,197,94,0.15); flex-shrink:0; animation:pulse 2.5s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1);opacity:1;} 50%{transform:scale(0.7);opacity:0.4;} }
+    .nav-sep { width:1px; height:18px; background:var(--g200); margin:0 2px; flex-shrink:0; }
+    .nav-links { display:flex; list-style:none; }
+    .nav-links a { padding:0 0.8rem; height:32px; display:flex; align-items:center; font-size:0.78rem; color:var(--g400); text-decoration:none; border-radius:100px; transition:color 0.15s,background 0.15s; }
+    .nav-links a:hover { color:var(--black); background:var(--g100); }
+    .nav-cta { height:32px; padding:0 1rem; margin-left:4px; background:var(--black); color:#fff; border-radius:100px; text-decoration:none; font-size:0.78rem; font-weight:500; display:flex; align-items:center; transition:opacity 0.15s; }
+    .nav-cta:hover { opacity:0.8; }
+
+    #hero { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:9rem 2rem 5rem; background:linear-gradient(180deg,#fff 0%,#fbfcff 100%); position:relative; overflow:hidden; }
+    #hero::before { content:''; position:absolute; inset:0; background:
+      radial-gradient(circle at 15% 55%, rgba(37,99,235,0.10), transparent 28%),
+      radial-gradient(circle at 72% 40%, rgba(96,165,250,0.10), transparent 22%);
+      pointer-events:none; }
+    #hero::after { content:''; position:absolute; right:0; top:0; bottom:0; width:48%; pointer-events:none; z-index:0; background-image:radial-gradient(circle,rgba(37,99,235,0.12) 1px,transparent 1px); background-size:26px 26px; mask-image:radial-gradient(ellipse 85% 85% at 65% 50%,black,transparent); }
+    .hero-inner { max-width:1100px; width:100%; display:grid; grid-template-columns:1.1fr 0.9fr; align-items:center; gap:4rem; position:relative; z-index:1; }
+    .hero-left { position:relative; z-index:1; }
+    .hero-right { position:relative; z-index:1; display:flex; justify-content:center; align-items:center; }
+    .hero-roles { display:flex; gap:0.5rem; margin-bottom:1.8rem; opacity:0; animation:fadeUp 0.7s 0.1s ease forwards; flex-wrap:wrap; }
+    .role-badge { display:inline-flex; align-items:center; gap:0.4rem; padding:0.28rem 0.85rem; background:var(--white); border:1px solid var(--borderM); border-radius:100px; font-size:0.71rem; font-weight:500; color:var(--g600); box-shadow:0 1px 4px rgba(0,0,0,0.05); }
+    .role-dot { width:5px; height:5px; border-radius:50%; background:var(--green); box-shadow:0 0 5px rgba(34,197,94,0.5); flex-shrink:0; animation:pulse 2s ease-in-out infinite; }
+    h1 { font-size:clamp(3rem,5.5vw,5.5rem); font-weight:800; line-height:0.97; letter-spacing:-0.055em; opacity:0; animation:fadeUp 0.7s 0.2s ease forwards; }
+    h1 .light { font-weight:200; color:var(--g400); }
+    .hero-divider { width:42px; height:2px; background:linear-gradient(90deg,var(--blue),transparent); border-radius:2px; margin:2rem 0; opacity:0; animation:fadeUp 0.7s 0.3s ease forwards; }
+    .hero-desc { font-size:1rem; color:var(--g600); font-weight:300; line-height:1.8; max-width:520px; opacity:0; animation:fadeUp 0.7s 0.35s ease forwards; }
+    .hero-props { margin-top:1.5rem; display:flex; flex-direction:column; gap:0.45rem; opacity:0; animation:fadeUp 0.7s 0.42s ease forwards; }
+    .hero-prop { display:flex; align-items:flex-start; gap:0.6rem; font-size:0.82rem; color:var(--g600); line-height:1.55; }
+    .hero-prop::before { content:'✓'; font-size:0.7rem; font-weight:700; color:var(--blue); background:#edf4ff; width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:0.12rem; }
+    .hero-actions { margin-top:2rem; display:flex; gap:0.75rem; opacity:0; animation:fadeUp 0.7s 0.5s ease forwards; flex-wrap:wrap; }
+    .btn-dark { height:44px; padding:0 1.6rem; background:var(--black); color:#fff; border-radius:10px; text-decoration:none; font-size:0.84rem; font-weight:500; display:flex; align-items:center; gap:0.5rem; transition:opacity 0.15s,transform 0.15s; box-shadow:0 2px 10px rgba(0,0,0,0.18); }
+    .btn-dark:hover { opacity:0.85; transform:translateY(-2px); }
+    .btn-outline { height:44px; padding:0 1.6rem; border:1px solid var(--borderM); color:var(--g600); border-radius:10px; text-decoration:none; font-size:0.84rem; display:flex; align-items:center; transition:background 0.15s,color 0.15s,transform 0.15s; }
+    .btn-outline:hover { background:var(--g50); color:var(--black); transform:translateY(-2px); }
+    .hero-stats { display:flex; align-items:stretch; gap:0; margin-top:3rem; background:var(--g50); border:1px solid var(--border); border-radius:14px; overflow:hidden; opacity:0; animation:fadeUp 0.7s 0.58s ease forwards; }
+    .stat-item { flex:1; padding:1.1rem 1rem; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .stat-item + .stat-item { border-left:1px solid var(--border); }
+    .stat-num { font-size:1.5rem; font-weight:800; letter-spacing:-0.05em; line-height:1; }
+    .stat-lbl { font-size:0.63rem; color:var(--g400); margin-top:0.2rem; white-space:nowrap; }
+    .avatar-wrap { opacity:0; animation:fadeUp 0.7s 0.25s ease forwards; }
+    .avatar-ring { width:300px; height:300px; border-radius:50%; border:1px solid var(--borderM); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; box-shadow:0 0 0 8px rgba(37,99,235,0.04),0 24px 60px rgba(0,0,0,0.12); background:linear-gradient(180deg,#fff,#f7f9fe); }
+    .avatar-ring::before { content:''; position:absolute; inset:-3px; border-radius:50%; background:conic-gradient(transparent 0deg,rgba(37,99,235,0.10) 60deg,transparent 120deg,rgba(37,99,235,0.08) 240deg,transparent 300deg,rgba(37,99,235,0.12) 360deg); animation:spin 12s linear infinite; z-index:2; pointer-events:none; }
+    @keyframes spin { to{transform:rotate(360deg);} }
+    .avatar-photo { width:100%; height:100%; border-radius:50%; background:radial-gradient(circle at 45% 35%, #ffffff, #dfe8f7 70%); display:flex; align-items:center; justify-content:center; font-size:5rem; color:var(--g400); }
+
+    .s-inner { max-width:1100px; margin:0 auto; padding:6rem 2rem; }
+    .s-eyebrow { font-size:0.65rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--g400); margin-bottom:0.7rem; }
+    .s-title { font-size:clamp(1.8rem,3vw,2.6rem); font-weight:800; letter-spacing:-0.05em; line-height:1.05; }
+    .s-sub { margin-top:0.6rem; font-size:0.88rem; color:var(--g600); font-weight:300; line-height:1.75; max-width:620px; }
+
+    #profil { background:var(--black); }
+    .profil-inner { max-width:1100px; margin:0 auto; padding:5rem 2rem; }
+    .profil-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.07); border-radius:20px; overflow:hidden; margin-top:3rem; }
+    .profil-card { background:rgba(255,255,255,0.02); padding:2rem; transition:background 0.2s; }
+    .profil-card:hover { background:rgba(255,255,255,0.05); }
+    .profil-tag { font-size:0.62rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:0.8rem; }
+    .profil-card h3 { font-size:1rem; font-weight:700; color:#fff; margin-bottom:0.6rem; }
+    .profil-card p { font-size:0.82rem; color:rgba(255,255,255,0.48); line-height:1.75; font-weight:300; }
+
+    #experiences { background:var(--g50); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+    .timeline { margin-top:3.5rem; }
+    .tl-item { display:grid; grid-template-columns:190px 1fr; gap:3rem; padding:2.5rem 0; border-top:1px solid var(--border); position:relative; }
+    .tl-item:last-child { border-bottom:1px solid var(--border); }
+    .tl-item::before { content:''; position:absolute; left:-2rem; top:0; bottom:0; width:2px; background:var(--blue); opacity:0; transition:opacity 0.25s; border-radius:1px; }
+    .tl-item:hover::before { opacity:1; }
+    .tl-year { font-size:0.76rem; color:var(--g400); line-height:1.6; padding-top:0.2rem; }
+    .tl-dur { font-size:0.68rem; color:var(--g400); margin-top:0.15rem; font-weight:600; }
+    .tl-role { font-size:1.02rem; font-weight:700; letter-spacing:-0.03em; margin-bottom:0.1rem; }
+    .tl-co { font-size:0.78rem; color:var(--g400); margin-bottom:0.7rem; font-weight:500; }
+    .tl-desc { font-size:0.84rem; color:var(--g600); line-height:1.8; font-weight:300; max-width:620px; }
+    .tl-impacts { margin-top:0.9rem; display:flex; flex-direction:column; gap:0.35rem; }
+    .tl-impact { font-size:0.8rem; color:var(--black); display:flex; align-items:baseline; gap:0.55rem; line-height:1.5; }
+    .tl-impact-arrow { color:var(--g400); font-size:0.7rem; flex-shrink:0; }
+    .tl-tags { display:flex; flex-wrap:wrap; gap:0.3rem; margin-top:1rem; }
+    .tl-tag { font-size:0.63rem; padding:0.2rem 0.65rem; border-radius:6px; background:var(--white); color:var(--g600); border:1px solid var(--borderM); font-weight:500; }
+
+    #competences { background:var(--white); }
+    .sk-grid { margin-top:3.5rem; display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--border); border-radius:20px; overflow:hidden; background:var(--border); gap:1px; }
+    .sk-card { background:var(--white); padding:1.4rem 1.6rem; transition:background 0.2s; }
+    .sk-card:hover { background:var(--g50); }
+    .sk-icon { width:40px; height:40px; border-radius:10px; background:var(--g50); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:1.15rem; margin-bottom:1rem; }
+    .sk-card h3 { font-size:0.88rem; font-weight:700; margin-bottom:0.45rem; }
+    .sk-card p { font-size:0.78rem; color:var(--g600); line-height:1.65; font-weight:300; }
+
+    #certifications { background:var(--g50); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+    .cert-grid { margin-top:3.5rem; display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem; }
+    .cert-card { background:var(--white); border:1px solid var(--border); border-radius:16px; padding:1.8rem 2rem; display:flex; align-items:center; gap:1.2rem; transition:transform 0.2s,box-shadow 0.2s; }
+    .cert-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,0.07); }
+    .cert-icon { width:48px; height:48px; border-radius:12px; background:var(--g50); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
+    .cert-name { font-size:0.92rem; font-weight:700; margin-bottom:0.25rem; }
+    .cert-detail { font-size:0.75rem; color:var(--g400); line-height:1.5; }
+
+    #projets { background:var(--white); }
+    .pj-grid { display:grid; gap:1.2rem; }
+    .pj-subsection { margin-top:3rem; }
+    .pj-subsection:first-of-type { margin-top:3.5rem; }
+    .pj-sub-header { display:flex; align-items:center; gap:0.6rem; margin-bottom:1.2rem; padding-bottom:0.8rem; border-bottom:1px solid var(--border); }
+    .pj-sub-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+    .pj-sub-title { font-size:0.88rem; font-weight:700; color:var(--black); }
+    .pj-sub-count { font-size:0.68rem; font-weight:600; color:var(--g400); background:var(--g100); border:1px solid var(--border); border-radius:100px; padding:0.1rem 0.5rem; }
+    .pj-card { background:var(--g50); border:1px solid var(--border); border-radius:18px; padding:1.4rem 1.6rem; display:flex; align-items:flex-start; gap:1.2rem; transition:transform 0.25s,box-shadow 0.25s; }
+    .pj-card:hover { transform:translateY(-5px); box-shadow:0 16px 40px rgba(0,0,0,0.08); }
+    .pj-icon { width:44px; height:44px; border-radius:12px; background:var(--white); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
+    .pj-body { flex:1; min-width:0; }
+    .pj-body h3 { font-size:0.95rem; font-weight:700; margin-bottom:0.35rem; }
+    .pj-body p { font-size:0.78rem; color:var(--g600); line-height:1.65; font-weight:300; }
+    .pj-footer { margin-top:1rem; display:flex; gap:0.4rem; flex-wrap:wrap; }
+    .pj-tag { font-size:0.62rem; padding:0.18rem 0.55rem; border-radius:4px; background:var(--white); border:1px solid var(--border); color:var(--g600); font-weight:500; }
+
+    #contact { background:var(--black); }
+    .ct-inner { max-width:1100px; margin:0 auto; padding:6rem 2rem; }
+    .ct-eyebrow { font-size:0.65rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:0.7rem; }
+    .ct-title { font-size:clamp(1.8rem,3vw,2.6rem); font-weight:800; letter-spacing:-0.05em; color:var(--white); margin-bottom:1rem; }
+    .ct-sub { font-size:0.88rem; color:rgba(255,255,255,0.45); font-weight:300; line-height:1.75; max-width:620px; margin-bottom:3rem; }
+    .ct-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
+    .ct-card { border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:2rem; position:relative; }
+    .ct-card::before { content:''; position:absolute; top:0; left:15%; right:15%; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent); }
+    .ct-card-icon { width:44px; height:44px; border-radius:12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin-bottom:1.2rem; }
+    .ct-card h3 { font-size:1rem; font-weight:700; color:#fff; margin-bottom:0.4rem; }
+    .ct-card p { font-size:0.82rem; color:rgba(255,255,255,0.45); font-weight:300; line-height:1.7; margin-bottom:1.5rem; }
+    .btn-white { height:42px; padding:0 1.5rem; background:var(--white); color:var(--black); border-radius:10px; text-decoration:none; font-size:0.82rem; font-weight:600; display:inline-flex; align-items:center; transition:opacity 0.15s,transform 0.15s; border:none; cursor:pointer; font-family:inherit; }
+    .btn-white:hover { opacity:0.85; transform:translateY(-2px); }
+    .ct-bottom { border:1px solid rgba(255,255,255,0.08); border-radius:16px; overflow:hidden; margin-top:1.2rem; display:grid; grid-template-columns:repeat(3,1fr); }
+    .ct-link { display:flex; align-items:center; gap:1rem; padding:1.4rem 1.6rem; text-decoration:none; border-right:1px solid rgba(255,255,255,0.06); transition:background 0.15s; }
+    .ct-link:last-child { border-right:none; }
+    .ct-link:hover { background:rgba(255,255,255,0.04); }
+    .ct-link-icon { width:34px; height:34px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:0.95rem; flex-shrink:0; }
+    .ct-lbl { font-size:0.62rem; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.2rem; }
+    .ct-val { font-size:0.82rem; font-weight:500; color:rgba(255,255,255,0.86); }
+    .ct-arrow { margin-left:auto; font-size:0.75rem; color:rgba(255,255,255,0.2); }
+
+    footer { background:var(--black); border-top:1px solid rgba(255,255,255,0.06); padding:1.4rem 2rem; display:flex; align-items:center; justify-content:center; gap:2rem; }
+    footer p { font-size:0.71rem; color:rgba(255,255,255,0.22); }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px);} to{opacity:1;transform:translateY(0);} }
+    .reveal { opacity:0; transform:translateY(16px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    @media (max-width:960px) {
+      #hero { padding:8rem 1.5rem 4rem; }
+      .hero-inner { grid-template-columns:1fr; gap:2rem; }
+      #hero::after { display:none; }
+      .hero-right { order:-1; display:flex; justify-content:center; }
+      .hero-left { text-align:center; display:flex; flex-direction:column; align-items:center; }
+      .hero-roles { justify-content:center; }
+      .hero-divider { margin-left:auto; margin-right:auto; }
+      .hero-desc { text-align:center; }
+      .hero-props { align-items:flex-start; max-width:440px; }
+      .hero-actions { justify-content:center; }
+      .hero-stats { width:100%; max-width:520px; }
+      .avatar-ring { width:220px; height:220px; }
+      .profil-grid, .ct-grid { grid-template-columns:1fr; }
+    }
+    @media (max-width:768px) {
+      nav { left:1rem; right:1rem; transform:none; top:12px; justify-content:space-between; }
+      .nav-links, .nav-sep { display:none; }
+      .s-inner, .ct-inner, .profil-inner { padding:3.5rem 1.2rem; }
+      .tl-item { grid-template-columns:1fr; gap:0.3rem; }
+      .sk-grid { grid-template-columns:1fr 1fr; }
+      .pj-grid, .cert-grid { grid-template-columns:1fr; }
+      .ct-bottom { grid-template-columns:1fr; }
+      .ct-link { border-right:none; border-bottom:1px solid rgba(255,255,255,0.06); }
+      .ct-link:last-child { border-bottom:none; }
+      footer { flex-direction:column; gap:0.4rem; text-align:center; }
+      .hero-stats { flex-wrap:wrap; }
+      .stat-item { flex:1 1 40%; }
+    }
+    @media (max-width:480px) {
+      .sk-grid { grid-template-columns:1fr; }
+      .hero-stats { flex-direction:column; }
+      .stat-item { border-left:none !important; border-top:1px solid var(--border); }
+      .stat-item:first-child { border-top:none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo"><div class="nav-pulse"></div>Audric THEVENET</a>
+  <div class="nav-sep"></div>
+  <ul class="nav-links">
+    <li><a href="#profil">Profil</a></li>
+    <li><a href="#experiences">Expériences</a></li>
+    <li><a href="#competences">Expertise</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#projets">Projets</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-sep"></div>
+  <a href="mailto:audric.thevenet@gmail.com" class="nav-cta">Me contacter</a>
+</nav>
+
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-roles">
+        <div class="role-badge"><div class="role-dot"></div>Technology & Engineering Executive</div>
+        <div class="role-badge"><div class="role-dot"></div>CTO / VP Engineering</div>
+      </div>
+      <h1>Audric<br><span class="light">THEVENET</span></h1>
+      <div class="hero-divider"></div>
+      <p class="hero-desc">Je dirige des organisations d’ingénierie à grande échelle et transforme des environnements technologiques complexes, avec un focus sur le delivery, les systèmes distribués et l’exécution à l’échelle.</p>
+      <div class="hero-props">
+        <div class="hero-prop">Exécution engineering à travers 60+ équipes (~500 ingénieurs)</div>
+        <div class="hero-prop">~90 % de prévisibilité sur les initiatives clés de delivery</div>
+        <div class="hero-prop">~45 % d’efficacité organisationnelle gagnée via des frameworks réutilisables</div>
+      </div>
+      <div class="hero-actions">
+        <a href="#experiences" class="btn-dark">Voir mon parcours ↓</a>
+        <a href="#contact" class="btn-outline">Me contacter</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><div class="stat-num">60+</div><div class="stat-lbl">équipes pilotées</div></div>
+        <div class="stat-item"><div class="stat-num">~500</div><div class="stat-lbl">ingénieurs</div></div>
+        <div class="stat-item"><div class="stat-num">~90%</div><div class="stat-lbl">predictability</div></div>
+        <div class="stat-item"><div class="stat-num">20+</div><div class="stat-lbl">ans d'expérience</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="avatar-wrap">
+        <div class="avatar-ring">
+          <img class="avatar-photo"
+     src="https://media.licdn.com/dms/image/v2/D4E03AQG-7uYQaDIMvg/profile-displayphoto-crop_800_800/B4EZzOSfBYIMAI-/0/1772987478553?e=1774483200&v=beta&t=JxdIoqqwCAhOP_3-9e58_ldm0g33EezZma41q1ee8L8"
+     alt="Audric Thevenet">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="profil">
+  <div class="profil-inner">
+    <div class="s-eyebrow">Profil</div>
+    <h2 class="s-title" style="color:#fff;">Leadership engineering, systèmes distribués, transformation à grande échelle</h2>
+    <p class="s-sub" style="color:rgba(255,255,255,0.48);">Dirigeant Technologie & Ingénierie avec plus de 20 ans d’expérience dans la direction d’organisations d’ingénierie et la transformation d’environnements fortement régulés. J’allie vision exécutive, pensée systémique et pratique hands-on.</p>
+
+    <div class="profil-grid">
+      <div class="profil-card reveal">
+        <div class="profil-tag">Positionnement</div>
+        <h3>Executive engineering leadership</h3>
+        <p>Direction d’organisations d’ingénierie à grande échelle, structuration d’operating models, gestion des dépendances transverses et alignement entre stratégie, architecture et exécution.</p>
+      </div>
+      <div class="profil-card reveal">
+        <div class="profil-tag">Scale</div>
+        <h3>Engineering at scale</h3>
+        <p>Exécution engineering sur une plateforme cloud hybride globale supportant des milliers d’applications d’entreprise, à travers plus de 60 équipes et environ 500 ingénieurs.</p>
+      </div>
+      <div class="profil-card reveal">
+        <div class="profil-tag">Impact</div>
+        <h3>Delivery predictability & efficiency</h3>
+        <p>Amélioration de la prévisibilité du delivery sur les initiatives clés, gains d’efficacité organisationnelle mesurables et réduction forte des charges récurrentes de coordination.</p>
+      </div>
+      <div class="profil-card reveal">
+        <div class="profil-tag">Style</div>
+        <h3>Hands-on systems & AI mindset</h3>
+        <p>Maintien d’une pratique technique active à travers des projets IA appliquée, reverse engineering, performance engineering et programmation algorithmique compétitive.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experiences">
+  <div class="s-inner">
+    <div class="s-eyebrow">Expériences</div>
+    <h2 class="s-title">Parcours</h2>
+    <p class="s-sub">Un parcours construit à l’intersection du delivery engineering, des systèmes complexes, de la transformation d’organisations et de la profondeur technique.</p>
+
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-year">2019 — Aujourd’hui<div class="tl-dur">Société Générale</div></div>
+        <div>
+          <div class="tl-role">Program Delivery Lead — SG Group Cloud Platform & Security</div>
+          <div class="tl-co">Paris · Plateforme cloud hybride globale</div>
+          <p class="tl-desc">Pilotage du delivery engineering pour la plateforme cloud hybride du Groupe, supportant des workloads bancaires régulés à l’échelle mondiale.</p>
+          <div class="tl-impacts">
+            <div class="tl-impact"><span class="tl-impact-arrow">→</span>60+ équipes (~500 ingénieurs) coordonnées</div>
+            <div class="tl-impact"><span class="tl-impact-arrow">→</span>~90 % de prévisibilité sur les initiatives majeures</div>
+            <div class="tl-impact"><span class="tl-impact-arrow">→</span>~45 % d’efficacité organisationnelle en plus</div>
+            <div class="tl-impact"><span class="tl-impact-arrow">→</span>~95 % de réduction de charges récurrentes de coordination</div>
+          </div>
+          <div class="tl-tags">
+            <span class="tl-tag">Delivery leadership</span><span class="tl-tag">Operating models</span><span class="tl-tag">Hybrid cloud</span><span class="tl-tag">Distributed systems</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-year">2016 — 2019<div class="tl-dur">FINAXYS</div></div>
+        <div>
+          <div class="tl-role">Chief Information Officer (CIO)</div>
+          <div class="tl-co">Neuilly-sur-Seine · Big Data & DevOps</div>
+          <p class="tl-desc">Leadership technologique dans un cabinet spécialisé en programmes bancaires complexes, avec pilotage des équipes, engagements clients et développement des capacités techniques.</p>
+          <div class="tl-impacts">
+            <div class="tl-impact"><span class="tl-impact-arrow">→</span>30 ingénieurs et consultants managés</div>
+            <div class="tl-impact"><span class="tl-impact-arrow">→</span>Académie et guildes techniques pour 350 consultants</div>
+            <div class="tl-impact"><span class="tl-impact-arrow">→</span>Contribution à une croissance de +100 collaborateurs</div>
+          </div>
+          <div class="tl-tags">
+            <span class="tl-tag">CIO</span><span class="tl-tag">Pre-sales</span><span class="tl-tag">Capability building</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-year">2016<div class="tl-dur">MERITIS</div></div>
+        <div>
+          <div class="tl-role">Chief Technical Officer (CTO)</div>
+          <div class="tl-co">Paris · Engineering capability & culture</div>
+          <p class="tl-desc">Conception d’initiatives company-wide de recrutement technique, formation interne, évaluation et culture d’excellence engineering.</p>
+          <div class="tl-impacts">
+            <div class="tl-impact"><span class="tl-impact-arrow">→</span>Plateforme interne de learning lancée</div>
+            <div class="tl-impact"><span class="tl-impact-arrow">→</span>Initiatives CodinGame pour l’excellence technique</div>
+          </div>
+          <div class="tl-tags">
+            <span class="tl-tag">CTO</span><span class="tl-tag">Technical culture</span><span class="tl-tag">Hiring framework</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-year">2004 — 2015<div class="tl-dur">Début de carrière</div></div>
+        <div>
+          <div class="tl-role">Engineering Leadership & Quantitative R&D</div>
+          <div class="tl-co">France · UK · Belgique</div>
+          <p class="tl-desc">Du quant front-office à la direction de développement logiciel, avec un fil rouge constant : systèmes critiques, complexité technique et exécution.</p>
+          <div class="tl-impacts">
+            <div class="tl-impact"><span class="tl-impact-arrow">→</span>ERP principal utilisé par 80+ organisations chez Veolia Propreté</div>
+            <div class="tl-impact"><span class="tl-impact-arrow">→</span>50+ systèmes en production et 80+ systèmes de trading livrés</div>
+            <div class="tl-impact"><span class="tl-impact-arrow">→</span>Ancien officier de l’Armée de Terre</div>
+          </div>
+          <div class="tl-tags">
+            <span class="tl-tag">Front Office</span><span class="tl-tag">ERP</span><span class="tl-tag">Quant</span><span class="tl-tag">Leadership</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="competences">
+  <div class="s-inner">
+    <div class="s-eyebrow">Expertise</div>
+    <h2 class="s-title">Compétences clés</h2>
+    <p class="s-sub">Une combinaison de leadership exécutif, d’architecture des systèmes, d’organisation engineering et de profondeur technique.</p>
+
+    <div class="sk-grid">
+      <div class="sk-card reveal"><div class="sk-icon">⚙️</div><h3>Engineering Leadership</h3><p>Direction d’équipes et d’organisations engineering, pilotage d’exécution, alignement transverse.</p></div>
+      <div class="sk-card reveal"><div class="sk-icon">🧭</div><h3>Operating Models</h3><p>Conception de frameworks de delivery, gouvernance, structuration organisationnelle à l’échelle.</p></div>
+      <div class="sk-card reveal"><div class="sk-icon">🕸️</div><h3>Distributed Systems</h3><p>Pensée systèmes, architecture logicielle et environnements distribués complexes.</p></div>
+      <div class="sk-card reveal"><div class="sk-icon">📈</div><h3>Transformation at Scale</h3><p>Transformation d’environnements technologiques régulés avec métriques d’impact tangibles.</p></div>
+      <div class="sk-card reveal"><div class="sk-icon">🤝</div><h3>Stakeholder Management</h3><p>Interface entre engineering, business, management et parties prenantes multiples.</p></div>
+      <div class="sk-card reveal"><div class="sk-icon">🧠</div><h3>Systems & AI Engineering</h3><p>Pratique hands-on à travers projets IA appliquée, performance engineering et reverse engineering.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="s-inner">
+    <div class="s-eyebrow">Formation & certifications</div>
+    <h2 class="s-title">Socle académique et certifications</h2>
+    <p class="s-sub">Une base d’ingénieur renforcée par des certifications reconnues en delivery et transformation.</p>
+
+    <div class="cert-grid">
+      <div class="cert-card reveal">
+        <div class="cert-icon">🎓</div>
+        <div><div class="cert-name">EPITECH — Vice Major</div><div class="cert-detail">Diplôme d’ingénieur en technologies de l’information (BAC+5)</div></div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">🏅</div>
+        <div><div class="cert-name">Certified SAFe® Program Consultant (SPC)</div><div class="cert-detail">Certification de référence en transformation et delivery à l’échelle</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projets">
+  <div class="s-inner">
+    <div class="s-eyebrow">Projets techniques</div>
+    <h2 class="s-title">Hands-on engineering</h2>
+    <p class="s-sub">Une pratique technique maintenue en parallèle des responsabilités exécutives, sur des sujets mêlant IA, systèmes legacy, performance et tooling.</p>
+
+    <div class="pj-grid">
+      <div class="pj-card reveal">
+        <div class="pj-icon">🧠</div>
+        <div class="pj-body">
+          <h3>Applied AI Processing Pipeline</h3>
+          <p>Workflows scalables d’amélioration image/vidéo par super-résolution, batch processing, reproductibilité et fiabilité sur grands volumes.</p>
+          <div class="pj-footer"><span class="pj-tag">AI</span><span class="pj-tag">Image/Video</span><span class="pj-tag">Batch processing</span></div>
+        </div>
+      </div>
+      <div class="pj-card reveal">
+        <div class="pj-icon">🛠️</div>
+        <div class="pj-body">
+          <h3>Star Wars Rebellion Editor & 25th Anniversary Patch</h3>
+          <p>Plus de 5 000 heures de reverse engineering et de modernisation d’un système legacy propriétaire, avec outillage .NET et patch de compatibilité long terme.</p>
+          <div class="pj-footer"><span class="pj-tag">Reverse engineering</span><span class="pj-tag">.NET</span><span class="pj-tag">Legacy systems</span></div>
+        </div>
+      </div>
+      <div class="pj-card reveal">
+        <div class="pj-icon">⚡</div>
+        <div class="pj-body">
+          <h3>SWTOR Unleashed</h3>
+          <p>Outil d’ingénierie de performance améliorant la gestion des ressources d’un moteur de jeu, adopté par des milliers d’utilisateurs.</p>
+          <div class="pj-footer"><span class="pj-tag">Performance engineering</span><span class="pj-tag">Tooling</span><span class="pj-tag">Optimization</span></div>
+        </div>
+      </div>
+      <div class="pj-card reveal">
+        <div class="pj-icon">🏆</div>
+        <div class="pj-body">
+          <h3>Competitive algorithmic programming</h3>
+          <p>Top 0,3 % mondial sur CodinGame, reflet d’une pratique algorithmique soutenue et d’une culture d’excellence technique.</p>
+          <div class="pj-footer"><span class="pj-tag">Algorithms</span><span class="pj-tag">Competitive programming</span><span class="pj-tag">Problem solving</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="ct-inner">
+    <div class="ct-eyebrow">Contact</div>
+    <h2 class="ct-title">Échanger sur des rôles CTO / VP Engineering</h2>
+    <p class="ct-sub">Ouvert aux opportunités où se rencontrent engineering scale, complexité système, transformation organisationnelle et leadership technique.</p>
+
+    <div class="ct-grid">
+      <div class="ct-card reveal">
+        <div class="ct-card-icon">✉️</div>
+        <h3>Prendre contact</h3>
+        <p>Le plus simple pour initier un échange direct sur une opportunité, un advisory role ou une discussion autour du delivery engineering à grande échelle.</p>
+        <a class="btn-white" href="mailto:audric.thevenet@gmail.com">Envoyer un email</a>
+      </div>
+      <div class="ct-card reveal">
+        <div class="ct-card-icon">📄</div>
+        <h3>CV & Resume</h3>
+        <p>Accès rapide aux versions française et anglaise du profil, ainsi qu’au profil LinkedIn actuel.</p>
+        <a class="btn-white" href="https://metasharp.org/resume" target="_blank" rel="noreferrer">Voir le resume</a>
+      </div>
+    </div>
+
+    <div class="ct-bottom">
+      <a class="ct-link" href="mailto:audric.thevenet@gmail.com">
+        <div class="ct-link-icon">✉️</div>
+        <div><div class="ct-lbl">Email</div><div class="ct-val">audric.thevenet@gmail.com</div></div>
+        <div class="ct-arrow">↗</div>
+      </a>
+      <a class="ct-link" href="https://www.linkedin.com" target="_blank" rel="noreferrer">
+        <div class="ct-link-icon">in</div>
+        <div><div class="ct-lbl">LinkedIn</div><div class="ct-val">Profil LinkedIn</div></div>
+        <div class="ct-arrow">↗</div>
+      </a>
+      <a class="ct-link" href="https://metasharp.org/cv" target="_blank" rel="noreferrer">
+        <div class="ct-link-icon">📄</div>
+        <div><div class="ct-lbl">Documents</div><div class="ct-val">CV FR · Resume EN</div></div>
+        <div class="ct-arrow">↗</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Audric THEVENET — Technology & Engineering Executive</p>
+  <p>CTO / VP Engineering · Systems · Scale · AI</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  },{threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
