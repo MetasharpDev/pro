@@ -1,0 +1,2535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audric Thevenet — Technology & Engineering Executive</title>
+  <meta name="description" content="Audric Thevenet — Technology & Engineering Executive, CTO / VP Engineering. Large-scale engineering leadership, distributed systems, organizational transformation." />
+  <meta name="theme-color" content="#ffffff" />
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --panel: rgba(255,255,255,0.78);
+      --panel-strong: rgba(255,255,255,0.92);
+      --text: #111111;
+      --muted: #5a5a5a;
+      --line: rgba(17,17,17,0.14);
+      --line-strong: rgba(17,17,17,0.28);
+      --accent: #111111;
+      --shadow: 0 20px 60px rgba(0,0,0,0.08);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --max: 1240px;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 18%, rgba(0,0,0,0.035), transparent 30%),
+        radial-gradient(circle at 85% 78%, rgba(0,0,0,0.03), transparent 28%),
+        linear-gradient(180deg, #ffffff, var(--bg));
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .site-shell {
+      position: relative;
+      min-height: 100vh;
+      isolation: isolate;
+    }
+
+    .network-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      opacity: 0.95;
+    }
+
+    .network-layer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.38), rgba(247,247,245,0.72));
+    }
+
+    #networkCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: grayscale(1) contrast(1.05);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(255,255,255,0.62);
+      border-bottom: 1px solid rgba(17,17,17,0.06);
+    }
+
+    .topbar-inner, .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 74px;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 1.02rem;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(17,17,17,0.08);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark svg { width: 24px; height: 24px; opacity: 0.85; }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a, .lang-toggle button {
+      font: inherit;
+      font-size: 0.95rem;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 10px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: 180ms ease;
+    }
+
+    .nav a:hover, .lang-toggle button:hover, .lang-toggle button.active {
+      color: var(--text);
+      background: rgba(17,17,17,0.06);
+    }
+
+    .hero {
+      padding: 72px 0 36px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .card {
+      position: relative;
+      background: var(--panel);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(17,17,17,0.08);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-main {
+      padding: 42px;
+      min-height: 560px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      width: fit-content;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid rgba(17,17,17,0.08);
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text);
+      opacity: 0.75;
+      box-shadow: 0 0 0 6px rgba(17,17,17,0.06);
+    }
+
+    .hero-title {
+      margin: 22px 0 14px;
+      font-size: clamp(2.9rem, 6vw, 5.4rem);
+      line-height: 0.92;
+      letter-spacing: -0.065em;
+      font-weight: 900;
+      max-width: 11ch;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+      line-height: 1.6;
+      color: #2d2d2d;
+      max-width: 62ch;
+      margin: 0;
+    }
+
+    .hero-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .metric-pill {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(17,17,17,0.08);
+      min-width: 142px;
+    }
+
+    .metric-value {
+      display: block;
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .metric-label {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      transition: 180ms ease;
+      border: 1px solid transparent;
+      min-height: 52px;
+    }
+
+    .btn.primary {
+      background: #111;
+      color: #fff;
+      box-shadow: 0 16px 30px rgba(0,0,0,0.16);
+    }
+
+    .btn.primary:hover { transform: translateY(-1px); }
+
+    .btn.secondary {
+      background: rgba(255,255,255,0.88);
+      color: #111;
+      border-color: rgba(17,17,17,0.09);
+    }
+
+    .btn.secondary:hover { background: #fff; }
+
+    .hero-side {
+      padding: 28px;
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .profile-panel {
+      padding: 24px;
+      background: var(--panel-strong);
+      border: 1px solid rgba(17,17,17,0.08);
+      border-radius: 24px;
+    }
+
+    .profile-top {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 84px;
+      height: 84px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(17,17,17,0.08);
+      background: rgba(255,255,255,0.72);
+      flex: 0 0 auto;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .profile-name {
+      font-size: 1.65rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      margin: 0;
+    }
+
+    .profile-role {
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.98rem;
+    }
+
+    .profile-links {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .profile-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(17,17,17,0.06);
+      border-radius: 16px;
+      color: #1e1e1e;
+    }
+
+    .profile-link small { color: var(--muted); display: block; margin-top: 2px; }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .signal-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(17,17,17,0.08);
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .signal-title {
+      font-size: 0.87rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .signal-value {
+      font-size: 1.75rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      margin: 0;
+    }
+
+    .signal-copy {
+      margin: 0;
+      color: #2a2a2a;
+      line-height: 1.45;
+      font-size: 0.95rem;
+    }
+
+    .section-block {
+      padding: 22px 0 8px;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 28px;
+    }
+
+    .section-kicker {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 800;
+      margin: 0 0 14px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin: 0 0 16px;
+      font-weight: 900;
+    }
+
+    .section-copy {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #2d2d2d;
+      margin: 0;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .tag {
+      padding: 11px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(17,17,17,0.08);
+      background: rgba(255,255,255,0.84);
+      font-weight: 700;
+      color: #202020;
+      font-size: 0.92rem;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 16px;
+    }
+
+    .timeline-item {
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid rgba(17,17,17,0.08);
+      background: rgba(255,255,255,0.82);
+    }
+
+    .timeline-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+
+    .timeline-role {
+      margin: 0;
+      font-size: 1.16rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .timeline-meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .timeline-bullets {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: #292929;
+      line-height: 1.7;
+    }
+
+    .contact-panel {
+      display: grid;
+      gap: 18px;
+    }
+
+    .contact-note {
+      margin: 0;
+      line-height: 1.7;
+      color: #2d2d2d;
+    }
+
+    .form {
+      display: grid;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field {
+      width: 100%;
+      border: 1px solid rgba(17,17,17,0.1);
+      background: rgba(255,255,255,0.9);
+      border-radius: 16px;
+      padding: 14px 15px;
+      font: inherit;
+      color: var(--text);
+      outline: none;
+      transition: 180ms ease;
+    }
+
+    .field:focus {
+      border-color: rgba(17,17,17,0.3);
+      box-shadow: 0 0 0 4px rgba(17,17,17,0.05);
+    }
+
+    textarea.field {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .tiny {
+      margin: 0;
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .downloads {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .foot {
+      padding: 22px 0 42px;
+    }
+
+    .foot-card {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 22px 26px;
+    }
+
+    .foot-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid, .section-grid { grid-template-columns: 1fr; }
+      .hero-main { min-height: unset; }
+    }
+
+    @media (max-width: 720px) {
+      .container, .topbar-inner { width: min(calc(100% - 20px), var(--max)); }
+      .hero { padding-top: 42px; }
+      .hero-main, .panel, .hero-side { padding: 22px; }
+      .hero-title { max-width: none; }
+      .form-row, .signal-grid { grid-template-columns: 1fr; }
+      .topbar-inner { min-height: 66px; }
+      .nav { gap: 6px; }
+      .nav a, .lang-toggle button { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <div class="network-layer" aria-hidden="true">
+      <canvas id="networkCanvas"></canvas>
+    </div>
+
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="#top" class="brand" aria-label="Audric Thevenet home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <circle cx="6" cy="12" r="1.6" fill="currentColor"></circle>
+              <circle cx="12" cy="6" r="1.6" fill="currentColor"></circle>
+              <circle cx="18" cy="12" r="1.6" fill="currentColor"></circle>
+              <circle cx="12" cy="18" r="1.6" fill="currentColor"></circle>
+              <path d="M7.2 11.1 10.8 6.9M13.2 6.9 16.8 11.1M7.2 12.9 10.8 17.1M13.2 17.1 16.8 12.9" />
+            </svg>
+          </span>
+          <span>Audric Thevenet</span>
+        </a>
+
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="#about" data-i18n="nav_about">À propos</a>
+          <a href="#experience" data-i18n="nav_experience">Parcours</a>
+          <a href="#contact" data-i18n="nav_contact">Contact</a>
+          <div class="lang-toggle" role="group" aria-label="Language switcher">
+            <button type="button" id="lang-fr">FR</button>
+            <button type="button" id="lang-en">EN</button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <article class="card hero-main">
+            <div>
+              <div class="eyebrow">
+                <span class="eyebrow-dot"></span>
+                <span data-i18n="eyebrow">Technology & Engineering Executive</span>
+              </div>
+
+              <h1 class="hero-title" data-i18n="hero_title">Engineering at Scale.</h1>
+              <p class="hero-subtitle" data-i18n="hero_subtitle">
+                Leadership of large-scale engineering organizations, distributed systems and organizational transformation in complex regulated environments.
+              </p>
+
+              <div class="hero-metrics" aria-label="Key metrics">
+                <div class="metric-pill">
+                  <span class="metric-value">70+</span>
+                  <span class="metric-label" data-i18n="metric_teams">Teams</span>
+                </div>
+                <div class="metric-pill">
+                  <span class="metric-value">~600</span>
+                  <span class="metric-label" data-i18n="metric_engineers">Engineers</span>
+                </div>
+                <div class="metric-pill">
+                  <span class="metric-value">~90%</span>
+                  <span class="metric-label" data-i18n="metric_predictability">Delivery predictability</span>
+                </div>
+                <div class="metric-pill">
+                  <span class="metric-value">~45%</span>
+                  <span class="metric-label" data-i18n="metric_efficiency">Efficiency improvement</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="hero-actions" id="heroActions"></div>
+            </div>
+          </article>
+
+          <aside class="card hero-side">
+            <section class="profile-panel">
+              <div class="profile-top">
+                <div class="avatar">
+                  <img src="https://media.licdn.com/dms/image/v2/D4E03AQG-7uYQaDIMvg/profile-displayphoto-crop_800_800/B4EZzOSfBYIMAI-/0/1772987478553?e=1774483200&v=beta&t=JxdIoqqwCAhOP_3-9e58_ldm0g33EezZma41q1ee8L8" alt="Audric Thevenet" />
+                </div>
+                <div>
+                  <h2 class="profile-name">Audric THEVENET</h2>
+                  <p class="profile-role" data-i18n="profile_role">
+                    CTO / VP Engineering · Distributed Systems · Organizational Design · Large-Scale Transformation
+                  </p>
+                </div>
+              </div>
+
+              <div class="profile-links">
+                <a class="profile-link" href="https://www.linkedin.com/in/audric" target="_blank" rel="noreferrer noopener">
+                  <span>
+                    <strong>LinkedIn</strong>
+                    <small data-i18n="linkedin_label">Professional profile</small>
+                  </span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+                <a class="profile-link" href="#contact">
+                  <span>
+                    <strong data-i18n="contact_link_title">Private contact form</strong>
+                    <small data-i18n="contact_link_copy">Email and phone kept off the public page</small>
+                  </span>
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </section>
+
+            <section class="signal-grid" aria-label="Signals">
+              <div class="signal-card">
+                <p class="signal-title" data-i18n="signal_1_title">Current scope</p>
+                <p class="signal-value" data-i18n="signal_1_value">Global hybrid cloud platform</p>
+                <p class="signal-copy" data-i18n="signal_1_copy">Large-scale execution across platform, security and IAM domains in a regulated banking environment.</p>
+              </div>
+              <div class="signal-card">
+                <p class="signal-title" data-i18n="signal_2_title">Core angle</p>
+                <p class="signal-value" data-i18n="signal_2_value">Distributed systems & AI</p>
+                <p class="signal-copy" data-i18n="signal_2_copy">Engineering scale, reusable operating models and pragmatic technical depth.</p>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section-block" id="about">
+        <div class="container section-grid">
+          <article class="card panel">
+            <p class="section-kicker" data-i18n="about_kicker">About</p>
+            <h2 class="section-title" data-i18n="about_title">Executive leadership with real engineering depth.</h2>
+            <p class="section-copy" data-i18n="about_copy">
+              I am a technology and engineering executive with 20+ years of experience leading large-scale engineering organizations and complex transformation programs in regulated environments. I currently lead engineering execution for Société Générale’s global hybrid cloud platform across more than 70 teams and around 600 engineers, supporting thousands of enterprise applications across private cloud, AWS and Azure.
+            </p>
+            <div class="tags" aria-label="Top skills">
+              <span class="tag" data-i18n="skill_1">Engineering Leadership</span>
+              <span class="tag" data-i18n="skill_2">Distributed Systems</span>
+              <span class="tag" data-i18n="skill_3">Organizational Design</span>
+              <span class="tag" data-i18n="skill_4">Large-Scale Transformation</span>
+              <span class="tag" data-i18n="skill_5">Systems Thinking</span>
+            </div>
+          </article>
+
+          <article class="card panel">
+            <p class="section-kicker" data-i18n="impact_kicker">Impact</p>
+            <h2 class="section-title" data-i18n="impact_title">What I optimize at scale.</h2>
+            <p class="section-copy" data-i18n="impact_copy">
+              My work focuses on designing operating models, coordination frameworks and execution patterns that allow large engineering organizations to scale predictably without losing technical depth. Alongside leadership responsibilities, I keep a hands-on engineering practice through applied AI pipelines, reverse engineering and performance engineering projects.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block" id="experience">
+        <div class="container section-grid">
+          <article class="card panel">
+            <p class="section-kicker" data-i18n="exp_kicker">Experience</p>
+            <h2 class="section-title" data-i18n="exp_title">Selected trajectory.</h2>
+            <div class="timeline">
+              <section class="timeline-item">
+                <div class="timeline-top">
+                  <h3 class="timeline-role" data-i18n="job1_role">Program Delivery Lead — SG Cloud Platform, Security & IAM</h3>
+                  <span class="timeline-meta" data-i18n="job1_meta">Société Générale · 2019–Present</span>
+                </div>
+                <ul class="timeline-bullets">
+                  <li data-i18n="job1_b1">Engineering execution leadership across 70+ teams (~600 engineers) supporting thousands of enterprise applications.</li>
+                  <li data-i18n="job1_b2">Global hybrid cloud platform at enterprise scale across private cloud, AWS and Azure.</li>
+                  <li data-i18n="job1_b3">~90% delivery predictability, ~45% efficiency improvement and ~95% reduction of recurring coordination overhead.</li>
+                </ul>
+              </section>
+
+              <section class="timeline-item">
+                <div class="timeline-top">
+                  <h3 class="timeline-role" data-i18n="job2_role">Chief Information Officer</h3>
+                  <span class="timeline-meta" data-i18n="job2_meta">Finaxys · 2016–2019</span>
+                </div>
+                <ul class="timeline-bullets">
+                  <li data-i18n="job2_b1">Led technology delivery in Big Data and DevOps environments for Tier-1 banking clients.</li>
+                  <li data-i18n="job2_b2">Built engineering guilds and an academy supporting ~350 consultants.</li>
+                </ul>
+              </section>
+
+              <section class="timeline-item">
+                <div class="timeline-top">
+                  <h3 class="timeline-role" data-i18n="job3_role">Chief Technical Officer</h3>
+                  <span class="timeline-meta" data-i18n="job3_meta">Meritis · 2016</span>
+                </div>
+                <ul class="timeline-bullets">
+                  <li data-i18n="job3_b1">Designed company-wide engineering recruitment frameworks, learning platforms and technical excellence programs.</li>
+                </ul>
+              </section>
+            </div>
+          </article>
+
+          <article class="card panel">
+            <p class="section-kicker" data-i18n="projects_kicker">Technical edge</p>
+            <h2 class="section-title" data-i18n="projects_title">Hands-on projects that still shape my leadership.</h2>
+            <div class="timeline">
+              <section class="timeline-item">
+                <div class="timeline-top">
+                  <h3 class="timeline-role">Applied AI Processing Pipeline</h3>
+                  <span class="timeline-meta">2023–Present</span>
+                </div>
+                <ul class="timeline-bullets">
+                  <li data-i18n="proj1">Scalable image and video enhancement workflows using modern AI super-resolution models.</li>
+                </ul>
+              </section>
+              <section class="timeline-item">
+                <div class="timeline-top">
+                  <h3 class="timeline-role">Star Wars Rebellion Editor & 25th Anniversary Patch</h3>
+                  <span class="timeline-meta">2021–Present</span>
+                </div>
+                <ul class="timeline-bullets">
+                  <li data-i18n="proj2">5,000+ hours of reverse engineering, tooling and long-term ecosystem modernization.</li>
+                </ul>
+              </section>
+              <section class="timeline-item">
+                <div class="timeline-top">
+                  <h3 class="timeline-role">SWTOR Unleashed</h3>
+                  <span class="timeline-meta">2011–2020</span>
+                </div>
+                <ul class="timeline-bullets">
+                  <li data-i18n="proj3">Performance engineering tooling adopted by thousands of users.</li>
+                </ul>
+              </section>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block" id="contact">
+        <div class="container section-grid">
+          <article class="card panel contact-panel">
+            <div>
+              <p class="section-kicker" data-i18n="contact_kicker">Contact</p>
+              <h2 class="section-title" data-i18n="contact_title">Private contact, public signal.</h2>
+              <p class="contact-note" data-i18n="contact_copy">
+                Use the form below to get in touch. Email address and phone number are intentionally not exposed on the public page. For a full profile, references and role details, LinkedIn remains the best entry point.
+              </p>
+            </div>
+
+            <form class="form" action="https://formspree.io/f/xnjgpang" method="POST">
+              <input type="hidden" name="_subject" value="Website contact — Audric Thevenet" />
+              <input type="hidden" name="_language" id="formLanguage" value="fr" />
+              <div class="form-row">
+                <label>
+                  <span class="sr-only" data-i18n="form_name">Name</span>
+                  <input class="field" type="text" name="name" required data-placeholder-fr="Nom" data-placeholder-en="Name" placeholder="Nom" />
+                </label>
+                <label>
+                  <span class="sr-only">Email</span>
+                  <input class="field" type="email" name="email" required placeholder="Email" />
+                </label>
+              </div>
+              <label>
+                <span class="sr-only" data-i18n="form_company">Company</span>
+                <input class="field" type="text" name="company" data-placeholder-fr="Entreprise / contexte" data-placeholder-en="Company / context" placeholder="Entreprise / contexte" />
+              </label>
+              <label>
+                <span class="sr-only" data-i18n="form_message">Message</span>
+                <textarea class="field" name="message" required data-placeholder-fr="Votre message" data-placeholder-en="Your message" placeholder="Votre message"></textarea>
+              </label>
+              <div class="downloads" id="downloadActions"></div>
+              <p class="tiny" data-i18n="form_note">Replace the Formspree endpoint with your own form ID before publishing.</p>
+            </form>
+          </article>
+
+          <article class="card panel">
+            <p class="section-kicker" data-i18n="why_kicker">Signal</p>
+            <h2 class="section-title" data-i18n="why_title">What this profile is optimized for.</h2>
+            <p class="section-copy" data-i18n="why_copy">
+              This site is designed to position a technology and engineering executive around three clear axes: engineering leadership, distributed systems, and organizational transformation at scale. It is intentionally concise, direct and technically credible.
+            </p>
+            <div class="tags">
+              <span class="tag">CTO</span>
+              <span class="tag">VP Engineering</span>
+              <span class="tag" data-i18n="tag_scale">Engineering at Scale</span>
+              <span class="tag" data-i18n="tag_distributed">Distributed Systems</span>
+              <span class="tag">AI</span>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="container">
+        <div class="card foot-card">
+          <p class="foot-note" data-i18n="footer_left">Distributed Systems · Scale · AI · Organizational Transformation</p>
+          <p class="foot-note">
+            <span data-i18n="footer_right">Latest documents available directly from this page.</span>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const I18N = {
+      fr: {
+        nav_about: "À propos",
+        nav_experience: "Parcours",
+        nav_contact: "Contact",
+        eyebrow: "Dirigeant Technologie & Engineering",
+        hero_title: "Engineering at Scale.",
+        hero_subtitle: "Leadership d’organisations engineering à grande échelle, systèmes distribués et transformation organisationnelle dans des environnements complexes et régulés.",
+        metric_teams: "Équipes",
+        metric_engineers: "Ingénieurs",
+        metric_predictability: "Prévisibilité delivery",
+        metric_efficiency: "Gain d’efficacité",
+        cta_contact: "Prendre contact",
+        cta_cv_fr: "Télécharger le CV FR",
+        cta_resume_en: "Télécharger le Resume EN",
+        profile_role: "CTO / VP Engineering · Systèmes distribués · Design organisationnel · Transformation à grande échelle",
+        linkedin_label: "Profil professionnel",
+        contact_link_title: "Formulaire de contact privé",
+        contact_link_copy: "Email et téléphone non exposés publiquement",
+        signal_1_title: "Scope actuel",
+        signal_1_value: "Plateforme cloud hybride globale",
+        signal_1_copy: "Exécution à grande échelle sur des domaines plateforme, sécurité et IAM dans un environnement bancaire régulé.",
+        signal_2_title: "Angle principal",
+        signal_2_value: "Systèmes distribués & IA",
+        signal_2_copy: "Engineering scale, modèles opérationnels réutilisables et crédibilité technique pragmatique.",
+        about_kicker: "À propos",
+        about_title: "Leadership executive avec vraie profondeur technique.",
+        about_copy: "Je suis dirigeant technologie et ingénierie avec plus de 20 ans d’expérience dans la direction d’organisations engineering à grande échelle et de programmes de transformation complexes en environnement régulé. Je pilote aujourd’hui l’exécution engineering de la plateforme cloud hybride globale de Société Générale à travers plus de 70 équipes et environ 600 ingénieurs, supportant des milliers d’applications d’entreprise sur cloud privé, AWS et Azure.",
+        skill_1: "Engineering Leadership",
+        skill_2: "Systèmes distribués",
+        skill_3: "Design organisationnel",
+        skill_4: "Transformation à grande échelle",
+        skill_5: "Systems Thinking",
+        impact_kicker: "Impact",
+        impact_title: "Ce que j’optimise à l’échelle.",
+        impact_copy: "Mon travail consiste à concevoir des modèles d’organisation, des frameworks de coordination et des patterns d’exécution permettant à de grandes organisations engineering de passer à l’échelle sans perdre en profondeur technique. En parallèle, je maintiens une pratique hands-on à travers des projets autour de l’IA appliquée, du reverse engineering et de l’ingénierie de performance.",
+        exp_kicker: "Parcours",
+        exp_title: "Trajectoire sélectionnée.",
+        job1_role: "Program Delivery Lead — SG Cloud Platform, Security & IAM",
+        job1_meta: "Société Générale · 2019–Présent",
+        job1_b1: "Pilotage de l’exécution engineering à travers 70+ équipes (~600 ingénieurs) supportant des milliers d’applications d’entreprise.",
+        job1_b2: "Plateforme cloud hybride globale à l’échelle de l’entreprise sur cloud privé, AWS et Azure.",
+        job1_b3: "~90 % de prévisibilité delivery, ~45 % de gain d’efficacité et ~95 % de réduction de certaines charges récurrentes de coordination.",
+        job2_role: "Chief Information Officer",
+        job2_meta: "Finaxys · 2016–2019",
+        job2_b1: "Pilotage du delivery technologique dans des environnements Big Data et DevOps pour des banques Tier-1.",
+        job2_b2: "Création de guildes engineering et d’une académie supportant ~350 consultants.",
+        job3_role: "Chief Technical Officer",
+        job3_meta: "Meritis · 2016",
+        job3_b1: "Conception de frameworks de recrutement, plateformes d’apprentissage et programmes d’excellence technique à l’échelle de l’entreprise.",
+        projects_kicker: "Profondeur technique",
+        projects_title: "Des projets hands-on qui nourrissent encore mon leadership.",
+        proj1: "Pipeline scalable d’amélioration image/vidéo fondé sur des modèles modernes de super-résolution IA.",
+        proj2: "5 000+ heures de reverse engineering, de tooling et de modernisation durable d’un écosystème legacy.",
+        proj3: "Outil d’ingénierie de performance adopté par des milliers d’utilisateurs.",
+        contact_kicker: "Contact",
+        contact_title: "Contact privé, signal public.",
+        contact_copy: "Utilise le formulaire ci-dessous pour me contacter. L’adresse email et le téléphone ne sont volontairement pas exposés sur la page publique. Pour un premier niveau de lecture, LinkedIn reste le meilleur point d’entrée.",
+        form_name: "Nom",
+        form_company: "Entreprise / contexte",
+        form_message: "Votre message",
+        form_submit: "Envoyer",
+        download_fr: "CV FR",
+        download_en: "Resume EN",
+        form_note: "Remplace l’endpoint Formspree par ton propre identifiant avant publication.",
+        why_kicker: "Positionnement",
+        why_title: "Ce que ce profil cherche à rendre évident.",
+        why_copy: "Ce site est conçu pour positionner un dirigeant technologie et engineering autour de trois axes clairs : leadership engineering, systèmes distribués et transformation organisationnelle à l’échelle. Le ton est volontairement concis, direct et techniquement crédible.",
+        tag_scale: "Engineering at Scale",
+        tag_distributed: "Systèmes distribués",
+        footer_left: "Systèmes distribués · Scale · IA · Transformation organisationnelle",
+        footer_right: "Les derniers documents sont disponibles directement depuis cette page."
+      },
+      en: {
+        nav_about: "About",
+        nav_experience: "Experience",
+        nav_contact: "Contact",
+        eyebrow: "Technology & Engineering Executive",
+        hero_title: "Engineering at Scale.",
+        hero_subtitle: "Leadership of large-scale engineering organizations, distributed systems and organizational transformation in complex regulated environments.",
+        metric_teams: "Teams",
+        metric_engineers: "Engineers",
+        metric_predictability: "Delivery predictability",
+        metric_efficiency: "Efficiency improvement",
+        cta_contact: "Get in touch",
+        cta_cv_fr: "Download CV FR",
+        cta_resume_en: "Download Resume EN",
+        profile_role: "CTO / VP Engineering · Distributed Systems · Organizational Design · Large-Scale Transformation",
+        linkedin_label: "Professional profile",
+        contact_link_title: "Private contact form",
+        contact_link_copy: "Email and phone kept off the public page",
+        signal_1_title: "Current scope",
+        signal_1_value: "Global hybrid cloud platform",
+        signal_1_copy: "Large-scale execution across platform, security and IAM domains in a regulated banking environment.",
+        signal_2_title: "Core angle",
+        signal_2_value: "Distributed Systems & AI",
+        signal_2_copy: "Engineering scale, reusable operating models and pragmatic technical depth.",
+        about_kicker: "About",
+        about_title: "Executive leadership with real engineering depth.",
+        about_copy: "I am a technology and engineering executive with 20+ years of experience leading large-scale engineering organizations and complex transformation programs in regulated environments. I currently lead engineering execution for Société Générale’s global hybrid cloud platform across more than 70 teams and around 600 engineers, supporting thousands of enterprise applications across private cloud, AWS and Azure.",
+        skill_1: "Engineering Leadership",
+        skill_2: "Distributed Systems",
+        skill_3: "Organizational Design",
+        skill_4: "Large-Scale Transformation",
+        skill_5: "Systems Thinking",
+        impact_kicker: "Impact",
+        impact_title: "What I optimize at scale.",
+        impact_copy: "My work focuses on designing operating models, coordination frameworks and execution patterns that allow large engineering organizations to scale predictably without losing technical depth. Alongside leadership responsibilities, I keep a hands-on engineering practice through applied AI pipelines, reverse engineering and performance engineering projects.",
+        exp_kicker: "Experience",
+        exp_title: "Selected trajectory.",
+        job1_role: "Program Delivery Lead — SG Cloud Platform, Security & IAM",
+        job1_meta: "Société Générale · 2019–Present",
+        job1_b1: "Engineering execution leadership across 70+ teams (~600 engineers) supporting thousands of enterprise applications.",
+        job1_b2: "Global hybrid cloud platform at enterprise scale across private cloud, AWS and Azure.",
+        job1_b3: "~90% delivery predictability, ~45% efficiency improvement and ~95% reduction of recurring coordination overhead.",
+        job2_role: "Chief Information Officer",
+        job2_meta: "Finaxys · 2016–2019",
+        job2_b1: "Led technology delivery in Big Data and DevOps environments for Tier-1 banking clients.",
+        job2_b2: "Built engineering guilds and an academy supporting ~350 consultants.",
+        job3_role: "Chief Technical Officer",
+        job3_meta: "Meritis · 2016",
+        job3_b1: "Designed engineering recruitment frameworks, learning platforms and company-wide technical excellence programs.",
+        projects_kicker: "Technical edge",
+        projects_title: "Hands-on projects that still shape my leadership.",
+        proj1: "Scalable image and video enhancement workflows using modern AI super-resolution models.",
+        proj2: "5,000+ hours of reverse engineering, tooling and long-term ecosystem modernization.",
+        proj3: "Performance engineering tooling adopted by thousands of users.",
+        contact_kicker: "Contact",
+        contact_title: "Private contact, public signal.",
+        contact_copy: "Use the form below to get in touch. Email address and phone number are intentionally not exposed on the public page. For a full profile, references and role details, LinkedIn remains the best entry point.",
+        form_name: "Name",
+        form_company: "Company / context",
+        form_message: "Your message",
+        form_submit: "Send",
+        download_fr: "CV FR",
+        download_en: "Resume EN",
+        form_note: "Replace the Formspree endpoint with your own form ID before publishing.",
+        why_kicker: "Signal",
+        why_title: "What this profile is optimized for.",
+        why_copy: "This site is designed to position a technology and engineering executive around three clear axes: engineering leadership, distributed systems, and organizational transformation at scale. It is intentionally concise, direct and technically credible.",
+        tag_scale: "Engineering at Scale",
+        tag_distributed: "Distributed Systems",
+        footer_left: "Distributed Systems · Scale · AI · Organizational Transformation",
+        footer_right: "Latest documents are available directly from this page."
+      }
+    };
+
+    const translatable = document.querySelectorAll('[data-i18n]');
+    const heroActions = document.getElementById('heroActions');
+    const downloadActions = document.getElementById('downloadActions');
+    const DOWNLOADS = {
+      fr: [
+        { href: 'https://metasharp.org/cv', label: 'Télécharger le CV FR' },
+        { href: 'https://metasharp.org/resume', label: 'Télécharger le Resume EN' }
+      ],
+      en: [
+        { href: 'https://metasharp.org/resume', label: 'Download Resume EN' },
+        { href: 'https://metasharp.org/cv', label: 'Download CV FR' }
+      ]
+    };
+
+    function renderActions(lang) {
+      const primaryText = lang === 'fr' ? 'Prendre contact' : 'Get in touch';
+      const items = DOWNLOADS[lang];
+      heroActions.innerHTML = `
+        <a class="btn primary" href="#contact">${primaryText}</a>
+        <a class="btn secondary" href="${items[0].href}" target="_blank" rel="noreferrer noopener">${items[0].label}</a>
+        <a class="btn secondary" href="${items[1].href}" target="_blank" rel="noreferrer noopener">${items[1].label}</a>
+      `;
+      downloadActions.innerHTML = `
+        <button class="btn primary" type="submit">${lang === 'fr' ? 'Envoyer' : 'Send'}</button>
+        <a class="btn secondary" href="${items[0].href}" target="_blank" rel="noreferrer noopener">${items[0].label}</a>
+        <a class="btn secondary" href="${items[1].href}" target="_blank" rel="noreferrer noopener">${items[1].label}</a>
+      `;
+    }
+    const langButtons = {
+      fr: document.getElementById('lang-fr'),
+      en: document.getElementById('lang-en')
+    };
+
+    function setLanguage(lang) {
+      const dict = I18N[lang] || I18N.en;
+      document.documentElement.lang = lang;
+      localStorage.setItem('audric-lang', lang);
+      document.getElementById('formLanguage').value = lang;
+      renderActions(lang);
+      translatable.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+      document.querySelectorAll('[data-placeholder-fr]').forEach(el => {
+        el.placeholder = lang === 'fr' ? el.dataset.placeholderFr : el.dataset.placeholderEn;
+      });
+      langButtons.fr.classList.toggle('active', lang === 'fr');
+      langButtons.en.classList.toggle('active', lang === 'en');
+    }
+
+    langButtons.fr.addEventListener('click', () => setLanguage('fr'));
+    langButtons.en.addEventListener('click', () => setLanguage('en'));
+    setLanguage(localStorage.getItem('audric-lang') || 'en');
+
+    (function network() {
+      const canvas = document.getElementById('networkCanvas');
+      const ctx = canvas.getContext('2d');
+      let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const points = [];
+      const clusterCount = 52;
+      const staticSymbols = [
+        { type: 'text', text: 'π', x: 0.05, y: 0.48, r: 13 },
+        { type: 'text', text: 'λ', x: 0.245, y: 0.61, r: 14, invert: true },
+        { type: 'dice', x: 0.304, y: 0.545, size: 20 }
+      ];
+
+      function resize() {
+        w = canvas.clientWidth = window.innerWidth;
+        h = canvas.clientHeight = window.innerHeight;
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        build();
+      }
+
+      function build() {
+        points.length = 0;
+        const activeW = Math.min(w * 0.46, 620);
+        const activeH = Math.min(h * 0.9, 920);
+        for (let i = 0; i < clusterCount; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const radius = Math.pow(Math.random(), 0.75);
+          const px = activeW * (0.08 + 0.86 * radius * Math.cos(angle) * 0.5 + 0.34);
+          const py = activeH * (0.08 + 0.86 * radius * Math.sin(angle) * 0.5 + 0.42);
+          points.push({
+            x: Math.max(18, Math.min(activeW - 10, px)),
+            y: Math.max(10, Math.min(h - 30, py)),
+            r: Math.random() > 0.84 ? 4.8 : Math.random() > 0.52 ? 3.2 : 2.2,
+            glow: Math.random() > 0.92,
+            seed: Math.random() * 1000
+          });
+        }
+
+        points.push({ x: activeW * 0.17, y: h * 0.32, r: 11, glow: true, seed: 11 });
+        points.push({ x: activeW * 0.08, y: h * 0.58, r: 12, glow: true, seed: 12 });
+        points.push({ x: activeW * 0.37, y: h * 0.46, r: 13, glow: true, seed: 13 });
+      }
+
+      function pencilLine(x1, y1, x2, y2) {
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const dist = Math.hypot(dx, dy);
+        const jitterCount = 2;
+        for (let j = 0; j < jitterCount; j++) {
+          ctx.beginPath();
+          const ox = (Math.random() - 0.5) * 0.9;
+          const oy = (Math.random() - 0.5) * 0.9;
+          ctx.moveTo(x1 + ox, y1 + oy);
+          const steps = Math.max(4, Math.floor(dist / 24));
+          for (let i = 1; i <= steps; i++) {
+            const t = i / steps;
+            const nx = x1 + dx * t + (Math.random() - 0.5) * 1.8;
+            const ny = y1 + dy * t + (Math.random() - 0.5) * 1.8;
+            ctx.lineTo(nx, ny);
+          }
+          ctx.strokeStyle = j === 0 ? 'rgba(12,12,12,0.24)' : 'rgba(12,12,12,0.12)';
+          ctx.lineWidth = j === 0 ? 0.9 : 0.6;
+          ctx.stroke();
+        }
+      }
+
+      function drawDice(x, y, size) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.strokeStyle = 'rgba(17,17,17,0.38)';
+        ctx.fillStyle = 'rgba(255,255,255,0.86)';
+        ctx.lineWidth = 0.9;
+        const s = size;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(s * 0.72, -s * 0.25);
+        ctx.lineTo(s * 0.72, s * 0.48);
+        ctx.lineTo(0, s * 0.72);
+        ctx.closePath();
+        ctx.fill(); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-s * 0.45, -s * 0.24);
+        ctx.lineTo(-s * 0.45, s * 0.48);
+        ctx.lineTo(0, s * 0.72);
+        ctx.closePath();
+        ctx.fill(); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-s * 0.45, -s * 0.24);
+        ctx.lineTo(s * 0.26, -s * 0.5);
+        ctx.lineTo(s * 0.72, -s * 0.25);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(255,255,255,0.96)';
+        ctx.fill(); ctx.stroke();
+        const pip = (px, py) => {
+          ctx.beginPath();
+          ctx.arc(px, py, s * 0.065, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(17,17,17,0.72)';
+          ctx.fill();
+        };
+        pip(-s*0.32, -s*0.09); pip(-s*0.13, -s*0.16); pip(-s*0.32, s*0.25); pip(-s*0.13, s*0.18);
+        pip(s*0.28, 0); pip(s*0.45, s*0.26);
+        ctx.restore();
+      }
+
+      function drawSymbols() {
+        staticSymbols.forEach(sym => {
+          const x = w * sym.x;
+          const y = h * sym.y;
+          if (sym.type === 'text') {
+            if (sym.invert) {
+              ctx.beginPath();
+              ctx.arc(x, y, sym.r, 0, Math.PI * 2);
+              ctx.fillStyle = 'rgba(17,17,17,0.66)';
+              ctx.fill();
+              ctx.fillStyle = 'rgba(255,255,255,0.96)';
+            } else {
+              ctx.fillStyle = 'rgba(17,17,17,0.66)';
+            }
+            ctx.font = `${sym.r * 1.45}px Georgia, serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(sym.text, x, y + 0.5);
+          } else if (sym.type === 'dice') {
+            drawDice(x, y, sym.size);
+          }
+        });
+      }
+
+      function render() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < points.length; i++) {
+          const a = points[i];
+          for (let j = i + 1; j < points.length; j++) {
+            const b = points[j];
+            const d = Math.hypot(a.x - b.x, a.y - b.y);
+            if (d < 145) pencilLine(a.x, a.y, b.x, b.y);
+          }
+        }
+
+        for (const p of points) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(17,17,17,0.42)';
+          ctx.fill();
+          if (p.glow) {
+            const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 5.5);
+            g.addColorStop(0, 'rgba(255,255,255,0.95)');
+            g.addColorStop(0.22, 'rgba(255,255,255,0.42)');
+            g.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.beginPath();
+            ctx.fillStyle = g;
+            ctx.arc(p.x, p.y, p.r * 5.5, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        for (let i = 0; i < 80; i++) {
+          ctx.beginPath();
+          ctx.arc(Math.random() * Math.min(w * 0.48, 680), Math.random() * h, Math.random() * 1.4 + 0.2, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(17,17,17,0.08)';
+          ctx.fill();
+        }
+
+        drawSymbols();
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      render();
+    })();
+  </script>
+</body>
+</html>
+```
+
+---
+
+# Ce qu’il te faut dans le même dossier
+
+- `index.html`
+- `cv_audric_thevenet_fr.pdf`
+- `resume_audric_thevenet_en.pdf`
+
+---
+
+# Ce que tu dois changer avant publication
+
+Dans le code, remplace :
+
+```html
+https://formspree.io/f/xnjgpang
+```
+
+par ton vrai endpoint Formspree.
+
+---
+
+# Mon conseil
+
+Teste d’abord cette version.  
+Si elle te plaît, je pourrai ensuite te faire une **V2 encore plus premium** avec :
+
+- vraie **photo locale optimisée**
+- **micro-animations haut de gamme**
+- fond réseau encore plus proche de ta bannière LinkedIn
+- **SEO / Open Graph / favicon**
+- version **déployable directement sur GitHub Pages / Netlify**
+
+Et là oui, on pourra viser un rendu **vraiment hors norme**.  
+Je peux aussi te sortir la **version React/Next ultra premium** si tu préfères. ```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audric Thevenet — Technology & Engineering Executive</title>
+  <meta name="description" content="Audric Thevenet — Technology & Engineering Executive, CTO / VP Engineering. Large-scale engineering leadership, distributed systems, organizational transformation." />
+  <meta name="theme-color" content="#ffffff" />
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --panel: rgba(255,255,255,0.78);
+      --panel-strong: rgba(255,255,255,0.92);
+      --text: #111111;
+      --muted: #5a5a5a;
+      --line: rgba(17,17,17,0.14);
+      --line-strong: rgba(17,17,17,0.28);
+      --accent: #111111;
+      --shadow: 0 20px 60px rgba(0,0,0,0.08);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --max: 1240px;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 18%, rgba(0,0,0,0.035), transparent 30%),
+        radial-gradient(circle at 85% 78%, rgba(0,0,0,0.03), transparent 28%),
+        linear-gradient(180deg, #ffffff, var(--bg));
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .site-shell {
+      position: relative;
+      min-height: 100vh;
+      isolation: isolate;
+    }
+
+    .network-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      opacity: 0.95;
+    }
+
+    .network-layer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.38), rgba(247,247,245,0.72));
+    }
+
+    #networkCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: grayscale(1) contrast(1.05);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(255,255,255,0.62);
+      border-bottom: 1px solid rgba(17,17,17,0.06);
+    }
+
+    .topbar-inner, .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 74px;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 1.02rem;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(17,17,17,0.08);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark svg { width: 24px; height: 24px; opacity: 0.85; }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a, .lang-toggle button {
+      font: inherit;
+      font-size: 0.95rem;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 10px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: 180ms ease;
+    }
+
+    .nav a:hover, .lang-toggle button:hover, .lang-toggle button.active {
+      color: var(--text);
+      background: rgba(17,17,17,0.06);
+    }
+
+    .hero {
+      padding: 72px 0 36px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .card {
+      position: relative;
+      background: var(--panel);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(17,17,17,0.08);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-main {
+      padding: 42px;
+      min-height: 560px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      width: fit-content;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid rgba(17,17,17,0.08);
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text);
+      opacity: 0.75;
+      box-shadow: 0 0 0 6px rgba(17,17,17,0.06);
+    }
+
+    .hero-title {
+      margin: 22px 0 14px;
+      font-size: clamp(2.9rem, 6vw, 5.4rem);
+      line-height: 0.92;
+      letter-spacing: -0.065em;
+      font-weight: 900;
+      max-width: 11ch;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+      line-height: 1.6;
+      color: #2d2d2d;
+      max-width: 62ch;
+      margin: 0;
+    }
+
+    .hero-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .metric-pill {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(17,17,17,0.08);
+      min-width: 142px;
+    }
+
+    .metric-value {
+      display: block;
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .metric-label {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      transition: 180ms ease;
+      border: 1px solid transparent;
+      min-height: 52px;
+    }
+
+    .btn.primary {
+      background: #111;
+      color: #fff;
+      box-shadow: 0 16px 30px rgba(0,0,0,0.16);
+    }
+
+    .btn.primary:hover { transform: translateY(-1px); }
+
+    .btn.secondary {
+      background: rgba(255,255,255,0.88);
+      color: #111;
+      border-color: rgba(17,17,17,0.09);
+    }
+
+    .btn.secondary:hover { background: #fff; }
+
+    .hero-side {
+      padding: 28px;
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .profile-panel {
+      padding: 24px;
+      background: var(--panel-strong);
+      border: 1px solid rgba(17,17,17,0.08);
+      border-radius: 24px;
+    }
+
+    .profile-top {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 84px;
+      height: 84px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(17,17,17,0.08);
+      background: rgba(255,255,255,0.72);
+      flex: 0 0 auto;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .profile-name {
+      font-size: 1.65rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      margin: 0;
+    }
+
+    .profile-role {
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.98rem;
+    }
+
+    .profile-links {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .profile-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(17,17,17,0.06);
+      border-radius: 16px;
+      color: #1e1e1e;
+    }
+
+    .profile-link small { color: var(--muted); display: block; margin-top: 2px; }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .signal-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(17,17,17,0.08);
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .signal-title {
+      font-size: 0.87rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .signal-value {
+      font-size: 1.75rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      margin: 0;
+    }
+
+    .signal-copy {
+      margin: 0;
+      color: #2a2a2a;
+      line-height: 1.45;
+      font-size: 0.95rem;
+    }
+
+    .section-block {
+      padding: 22px 0 8px;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 28px;
+    }
+
+    .section-kicker {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 800;
+      margin: 0 0 14px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin: 0 0 16px;
+      font-weight: 900;
+    }
+
+    .section-copy {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #2d2d2d;
+      margin: 0;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .tag {
+      padding: 11px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(17,17,17,0.08);
+      background: rgba(255,255,255,0.84);
+      font-weight: 700;
+      color: #202020;
+      font-size: 0.92rem;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 16px;
+    }
+
+    .timeline-item {
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid rgba(17,17,17,0.08);
+      background: rgba(255,255,255,0.82);
+    }
+
+    .timeline-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+
+    .timeline-role {
+      margin: 0;
+      font-size: 1.16rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .timeline-meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .timeline-bullets {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: #292929;
+      line-height: 1.7;
+    }
+
+    .contact-panel {
+      display: grid;
+      gap: 18px;
+    }
+
+    .contact-note {
+      margin: 0;
+      line-height: 1.7;
+      color: #2d2d2d;
+    }
+
+    .form {
+      display: grid;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field {
+      width: 100%;
+      border: 1px solid rgba(17,17,17,0.1);
+      background: rgba(255,255,255,0.9);
+      border-radius: 16px;
+      padding: 14px 15px;
+      font: inherit;
+      color: var(--text);
+      outline: none;
+      transition: 180ms ease;
+    }
+
+    .field:focus {
+      border-color: rgba(17,17,17,0.3);
+      box-shadow: 0 0 0 4px rgba(17,17,17,0.05);
+    }
+
+    textarea.field {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .tiny {
+      margin: 0;
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .downloads {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .foot {
+      padding: 22px 0 42px;
+    }
+
+    .foot-card {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 22px 26px;
+    }
+
+    .foot-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid, .section-grid { grid-template-columns: 1fr; }
+      .hero-main { min-height: unset; }
+    }
+
+    @media (max-width: 720px) {
+      .container, .topbar-inner { width: min(calc(100% - 20px), var(--max)); }
+      .hero { padding-top: 42px; }
+      .hero-main, .panel, .hero-side { padding: 22px; }
+      .hero-title { max-width: none; }
+      .form-row, .signal-grid { grid-template-columns: 1fr; }
+      .topbar-inner { min-height: 66px; }
+      .nav { gap: 6px; }
+      .nav a, .lang-toggle button { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <div class="network-layer" aria-hidden="true">
+      <canvas id="networkCanvas"></canvas>
+    </div>
+
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="#top" class="brand" aria-label="Audric Thevenet home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <circle cx="6" cy="12" r="1.6" fill="currentColor"></circle>
+              <circle cx="12" cy="6" r="1.6" fill="currentColor"></circle>
+              <circle cx="18" cy="12" r="1.6" fill="currentColor"></circle>
+              <circle cx="12" cy="18" r="1.6" fill="currentColor"></circle>
+              <path d="M7.2 11.1 10.8 6.9M13.2 6.9 16.8 11.1M7.2 12.9 10.8 17.1M13.2 17.1 16.8 12.9" />
+            </svg>
+          </span>
+          <span>Audric Thevenet</span>
+        </a>
+
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="#about" data-i18n="nav_about">À propos</a>
+          <a href="#experience" data-i18n="nav_experience">Parcours</a>
+          <a href="#contact" data-i18n="nav_contact">Contact</a>
+          <div class="lang-toggle" role="group" aria-label="Language switcher">
+            <button type="button" id="lang-fr">FR</button>
+            <button type="button" id="lang-en">EN</button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <article class="card hero-main">
+            <div>
+              <div class="eyebrow">
+                <span class="eyebrow-dot"></span>
+                <span data-i18n="eyebrow">Technology & Engineering Executive</span>
+              </div>
+
+              <h1 class="hero-title" data-i18n="hero_title">Engineering at Scale.</h1>
+              <p class="hero-subtitle" data-i18n="hero_subtitle">
+                Leadership of large-scale engineering organizations, distributed systems and organizational transformation in complex regulated environments.
+              </p>
+
+              <div class="hero-metrics" aria-label="Key metrics">
+                <div class="metric-pill">
+                  <span class="metric-value">70+</span>
+                  <span class="metric-label" data-i18n="metric_teams">Teams</span>
+                </div>
+                <div class="metric-pill">
+                  <span class="metric-value">~600</span>
+                  <span class="metric-label" data-i18n="metric_engineers">Engineers</span>
+                </div>
+                <div class="metric-pill">
+                  <span class="metric-value">~90%</span>
+                  <span class="metric-label" data-i18n="metric_predictability">Delivery predictability</span>
+                </div>
+                <div class="metric-pill">
+                  <span class="metric-value">~45%</span>
+                  <span class="metric-label" data-i18n="metric_efficiency">Efficiency improvement</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="hero-actions">
+                <a class="btn primary" href="#contact" data-i18n="cta_contact">Get in touch</a>
+                <a class="btn secondary" href="https://metasharp.org/cv" target="_blank" rel="noreferrer noopener" data-i18n="cta_cv_fr">Télécharger le CV FR</a>
+                <a class="btn secondary" href="https://metasharp.org/resume" target="_blank" rel="noreferrer noopener" data-i18n="cta_resume_en">Download Resume EN</a>
+              </div>
+            </div>
+          </article>
+
+          <aside class="card hero-side">
+            <section class="profile-panel">
+              <div class="profile-top">
+                <div class="avatar">
+                  <img src="https://media.licdn.com/dms/image/v2/D4E03AQHNhWgAMa0HYQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1717276170908?e=2147483647&v=beta&t=Gj4N1uPz2iG3Jf8Bdmr1e6SQbNwAPO0S3T4P5MbeSNg" alt="Audric Thevenet portrait" />
+                </div>
+                <div>
+                  <h2 class="profile-name">Audric THEVENET</h2>
+                  <p class="profile-role" data-i18n="profile_role">
+                    CTO / VP Engineering · Distributed Systems · Organizational Design · Large-Scale Transformation
+                  </p>
+                </div>
+              </div>
+
+              <div class="profile-links">
+                <a class="profile-link" href="https://www.linkedin.com/in/audric" target="_blank" rel="noreferrer noopener">
+                  <span>
+                    <strong>LinkedIn</strong>
+                    <small data-i18n="linkedin_label">Professional profile</small>
+                  </span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+                <a class="profile-link" href="#contact">
+                  <span>
+                    <strong data-i18n="contact_link_title">Private contact form</strong>
+                    <small data-i18n="contact_link_copy">Email and phone kept off the public page</small>
+                  </span>
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </section>
+
+            <section class="signal-grid" aria-label="Signals">
+              <div class="signal-card">
+                <p class="signal-title" data-i18n="signal_1_title">Current scope</p>
+                <p class="signal-value" data-i18n="signal_1_value">Global hybrid cloud platform</p>
+                <p class="signal-copy" data-i18n="signal_1_copy">Large-scale execution across platform, security and IAM domains in a regulated banking environment.</p>
+              </div>
+              <div class="signal-card">
+                <p class="signal-title" data-i18n="signal_2_title">Core angle</p>
+                <p class="signal-value" data-i18n="signal_2_value">Distributed Systems & AI</p>
+                <p class="signal-copy" data-i18n="signal_2_copy">Engineering scale, reusable operating models and pragmatic technical depth.</p>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section-block" id="about">
+        <div class="container section-grid">
+          <article class="card panel">
+            <p class="section-kicker" data-i18n="about_kicker">About</p>
+            <h2 class="section-title" data-i18n="about_title">Executive leadership with real engineering depth.</h2>
+            <p class="section-copy" data-i18n="about_copy">
+              I am a technology and engineering executive with 20+ years of experience leading large-scale engineering organizations and complex transformation programs in regulated environments. I currently lead engineering execution for Société Générale’s global hybrid cloud platform across more than 70 teams and around 600 engineers, supporting thousands of enterprise applications across private cloud, AWS and Azure.
+            </p>
+            <div class="tags" aria-label="Top skills">
+              <span class="tag" data-i18n="skill_1">Engineering Leadership</span>
+              <span class="tag" data-i18n="skill_2">Distributed Systems</span>
+              <span class="tag" data-i18n="skill_3">Organizational Design</span>
+              <span class="tag" data-i18n="skill_4">Large-Scale Transformation</span>
+              <span class="tag" data-i18n="skill_5">Systems Thinking</span>
+            </div>
+          </article>
+
+          <article class="card panel">
+            <p class="section-kicker" data-i18n="impact_kicker">Impact</p>
+            <h2 class="section-title" data-i18n="impact_title">What I optimize at scale.</h2>
+            <p class="section-copy" data-i18n="impact_copy">
+              My work focuses on designing operating models, coordination frameworks and execution patterns that allow large engineering organizations to scale predictably without losing technical depth. Alongside leadership responsibilities, I keep a hands-on engineering practice through applied AI pipelines, reverse engineering and performance engineering projects.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block" id="experience">
+        <div class="container section-grid">
+          <article class="card panel">
+            <p class="section-kicker" data-i18n="exp_kicker">Experience</p>
+            <h2 class="section-title" data-i18n="exp_title">Selected trajectory.</h2>
+            <div class="timeline">
+              <section class="timeline-item">
+                <div class="timeline-top">
+                  <h3 class="timeline-role" data-i18n="job1_role">Program Delivery Lead — SG Cloud Platform, Security & IAM</h3>
+                  <span class="timeline-meta" data-i18n="job1_meta">Société Générale · 2019–Present</span>
+                </div>
+                <ul class="timeline-bullets">
+                  <li data-i18n="job1_b1">Engineering execution leadership across 70+ teams (~600 engineers) supporting thousands of enterprise applications.</li>
+                  <li data-i18n="job1_b2">Global hybrid cloud platform at enterprise scale across private cloud, AWS and Azure.</li>
+                  <li data-i18n="job1_b3">~90% delivery predictability, ~45% efficiency improvement and ~95% reduction of recurring coordination overhead.</li>
+                </ul>
+              </section>
+
+              <section class="timeline-item">
+                <div class="timeline-top">
+                  <h3 class="timeline-role" data-i18n="job2_role">Chief Information Officer</h3>
+                  <span class="timeline-meta" data-i18n="job2_meta">Finaxys · 2016–2019</span>
+                </div>
+                <ul class="timeline-bullets">
+                  <li data-i18n="job2_b1">Led technology delivery in Big Data and DevOps environments for Tier-1 banking clients.</li>
+                  <li data-i18n="job2_b2">Built engineering guilds and an academy supporting ~350 consultants.</li>
+                </ul>
+              </section>
+
+              <section class="timeline-item">
+                <div class="timeline-top">
+                  <h3 class="timeline-role" data-i18n="job3_role">Chief Technical Officer</h3>
+                  <span class="timeline-meta" data-i18n="job3_meta">Meritis · 2016</span>
+                </div>
+                <ul class="timeline-bullets">
+                  <li data-i18n="job3_b1">Designed company-wide engineering recruitment frameworks, learning platforms and technical excellence programs.</li>
+                </ul>
+              </section>
+            </div>
+          </article>
+
+          <article class="card panel">
+            <p class="section-kicker" data-i18n="projects_kicker">Technical edge</p>
+            <h2 class="section-title" data-i18n="projects_title">Hands-on projects that still shape my leadership.</h2>
+            <div class="timeline">
+              <section class="timeline-item">
+                <div class="timeline-top">
+                  <h3 class="timeline-role">Applied AI Processing Pipeline</h3>
+                  <span class="timeline-meta">2023–Present</span>
+                </div>
+                <ul class="timeline-bullets">
+                  <li data-i18n="proj1">Scalable image and video enhancement workflows using modern AI super-resolution models.</li>
+                </ul>
+              </section>
+              <section class="timeline-item">
+                <div class="timeline-top">
+                  <h3 class="timeline-role">Star Wars Rebellion Editor & 25th Anniversary Patch</h3>
+                  <span class="timeline-meta">2021–Present</span>
+                </div>
+                <ul class="timeline-bullets">
+                  <li data-i18n="proj2">5,000+ hours of reverse engineering, tooling and long-term ecosystem modernization.</li>
+                </ul>
+              </section>
+              <section class="timeline-item">
+                <div class="timeline-top">
+                  <h3 class="timeline-role">SWTOR Unleashed</h3>
+                  <span class="timeline-meta">2011–2020</span>
+                </div>
+                <ul class="timeline-bullets">
+                  <li data-i18n="proj3">Performance engineering tooling adopted by thousands of users.</li>
+                </ul>
+              </section>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block" id="contact">
+        <div class="container section-grid">
+          <article class="card panel contact-panel">
+            <div>
+              <p class="section-kicker" data-i18n="contact_kicker">Contact</p>
+              <h2 class="section-title" data-i18n="contact_title">Private contact, public signal.</h2>
+              <p class="contact-note" data-i18n="contact_copy">
+                Use the form below to get in touch. Email address and phone number are intentionally not exposed on the public page. For a full profile, references and role details, LinkedIn remains the best entry point.
+              </p>
+            </div>
+
+            <form class="form" action="https://formspree.io/f/xnjgpang" method="POST">
+              <input type="hidden" name="_subject" value="Website contact — Audric Thevenet" />
+              <input type="hidden" name="_language" id="formLanguage" value="fr" />
+              <div class="form-row">
+                <label>
+                  <span class="sr-only" data-i18n="form_name">Name</span>
+                  <input class="field" type="text" name="name" required data-placeholder-fr="Nom" data-placeholder-en="Name" placeholder="Nom" />
+                </label>
+                <label>
+                  <span class="sr-only">Email</span>
+                  <input class="field" type="email" name="email" required placeholder="Email" />
+                </label>
+              </div>
+              <label>
+                <span class="sr-only" data-i18n="form_company">Company</span>
+                <input class="field" type="text" name="company" data-placeholder-fr="Entreprise / contexte" data-placeholder-en="Company / context" placeholder="Entreprise / contexte" />
+              </label>
+              <label>
+                <span class="sr-only" data-i18n="form_message">Message</span>
+                <textarea class="field" name="message" required data-placeholder-fr="Votre message" data-placeholder-en="Your message" placeholder="Votre message"></textarea>
+              </label>
+              <div class="downloads">
+                <button class="btn primary" type="submit" data-i18n="form_submit">Envoyer</button>
+                <a class="btn secondary" href="https://metasharp.org/cv" target="_blank" rel="noreferrer noopener" data-i18n="download_fr">CV FR</a>
+                <a class="btn secondary" href="https://metasharp.org/resume" target="_blank" rel="noreferrer noopener" data-i18n="download_en">Resume EN</a>
+              </div>
+              <p class="tiny" data-i18n="form_note">Replace the Formspree endpoint with your own form ID before publishing.</p>
+            </form>
+          </article>
+
+          <article class="card panel">
+            <p class="section-kicker" data-i18n="why_kicker">Signal</p>
+            <h2 class="section-title" data-i18n="why_title">What this profile is optimized for.</h2>
+            <p class="section-copy" data-i18n="why_copy">
+              This site is designed to position a technology and engineering executive around three clear axes: engineering leadership, distributed systems, and organizational transformation at scale. It is intentionally concise, direct and technically credible.
+            </p>
+            <div class="tags">
+              <span class="tag">CTO</span>
+              <span class="tag">VP Engineering</span>
+              <span class="tag" data-i18n="tag_scale">Engineering at Scale</span>
+              <span class="tag" data-i18n="tag_distributed">Distributed Systems</span>
+              <span class="tag">AI</span>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="container">
+        <div class="card foot-card">
+          <p class="foot-note" data-i18n="footer_left">Distributed Systems · Scale · AI · Organizational Transformation</p>
+          <p class="foot-note">
+            <span data-i18n="footer_right">Latest documents available directly from this page.</span>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const I18N = {
+      fr: {
+        nav_about: "À propos",
+        nav_experience: "Parcours",
+        nav_contact: "Contact",
+        eyebrow: "Dirigeant Technologie & Engineering",
+        hero_title: "Engineering at Scale.",
+        hero_subtitle: "Leadership d’organisations engineering à grande échelle, systèmes distribués et transformation organisationnelle dans des environnements complexes et régulés.",
+        metric_teams: "Équipes",
+        metric_engineers: "Ingénieurs",
+        metric_predictability: "Prévisibilité delivery",
+        metric_efficiency: "Gain d’efficacité",
+        cta_contact: "Prendre contact",
+        cta_cv_fr: "Télécharger le CV FR",
+        cta_resume_en: "Télécharger le Resume EN",
+        profile_role: "CTO / VP Engineering · Systèmes distribués · Design organisationnel · Transformation à grande échelle",
+        linkedin_label: "Profil professionnel",
+        contact_link_title: "Formulaire de contact privé",
+        contact_link_copy: "Email et téléphone non exposés publiquement",
+        signal_1_title: "Scope actuel",
+        signal_1_value: "Plateforme cloud hybride globale",
+        signal_1_copy: "Exécution à grande échelle sur des domaines plateforme, sécurité et IAM dans un environnement bancaire régulé.",
+        signal_2_title: "Angle principal",
+        signal_2_value: "Systèmes distribués & IA",
+        signal_2_copy: "Engineering scale, modèles opérationnels réutilisables et crédibilité technique pragmatique.",
+        about_kicker: "À propos",
+        about_title: "Leadership executive avec vraie profondeur technique.",
+        about_copy: "Je suis dirigeant technologie et ingénierie avec plus de 20 ans d’expérience dans la direction d’organisations engineering à grande échelle et de programmes de transformation complexes en environnement régulé. Je pilote aujourd’hui l’exécution engineering de la plateforme cloud hybride globale de Société Générale à travers plus de 70 équipes et environ 600 ingénieurs, supportant des milliers d’applications d’entreprise sur cloud privé, AWS et Azure.",
+        skill_1: "Engineering Leadership",
+        skill_2: "Systèmes distribués",
+        skill_3: "Design organisationnel",
+        skill_4: "Transformation à grande échelle",
+        skill_5: "Systems Thinking",
+        impact_kicker: "Impact",
+        impact_title: "Ce que j’optimise à l’échelle.",
+        impact_copy: "Mon travail consiste à concevoir des modèles d’organisation, des frameworks de coordination et des patterns d’exécution permettant à de grandes organisations engineering de passer à l’échelle sans perdre en profondeur technique. En parallèle, je maintiens une pratique hands-on à travers des projets autour de l’IA appliquée, du reverse engineering et de l’ingénierie de performance.",
+        exp_kicker: "Parcours",
+        exp_title: "Trajectoire sélectionnée.",
+        job1_role: "Program Delivery Lead — SG Cloud Platform, Security & IAM",
+        job1_meta: "Société Générale · 2019–Présent",
+        job1_b1: "Pilotage de l’exécution engineering à travers 70+ équipes (~600 ingénieurs) supportant des milliers d’applications d’entreprise.",
+        job1_b2: "Plateforme cloud hybride globale à l’échelle de l’entreprise sur cloud privé, AWS et Azure.",
+        job1_b3: "~90 % de prévisibilité delivery, ~45 % de gain d’efficacité et ~95 % de réduction de certaines charges récurrentes de coordination.",
+        job2_role: "Chief Information Officer",
+        job2_meta: "Finaxys · 2016–2019",
+        job2_b1: "Pilotage du delivery technologique dans des environnements Big Data et DevOps pour des banques Tier-1.",
+        job2_b2: "Création de guildes engineering et d’une académie supportant ~350 consultants.",
+        job3_role: "Chief Technical Officer",
+        job3_meta: "Meritis · 2016",
+        job3_b1: "Conception de frameworks de recrutement, plateformes d’apprentissage et programmes d’excellence technique à l’échelle de l’entreprise.",
+        projects_kicker: "Profondeur technique",
+        projects_title: "Des projets hands-on qui nourrissent encore mon leadership.",
+        proj1: "Pipeline scalable d’amélioration image/vidéo fondé sur des modèles modernes de super-résolution IA.",
+        proj2: "5 000+ heures de reverse engineering, de tooling et de modernisation durable d’un écosystème legacy.",
+        proj3: "Outil d’ingénierie de performance adopté par des milliers d’utilisateurs.",
+        contact_kicker: "Contact",
+        contact_title: "Contact privé, signal public.",
+        contact_copy: "Utilise le formulaire ci-dessous pour me contacter. L’adresse email et le téléphone ne sont volontairement pas exposés sur la page publique. Pour un premier niveau de lecture, LinkedIn reste le meilleur point d’entrée.",
+        form_name: "Nom",
+        form_company: "Entreprise / contexte",
+        form_message: "Votre message",
+        form_submit: "Envoyer",
+        download_fr: "CV FR",
+        download_en: "Resume EN",
+        form_note: "Remplace l’endpoint Formspree par ton propre identifiant avant publication.",
+        why_kicker: "Positionnement",
+        why_title: "Ce que ce profil cherche à rendre évident.",
+        why_copy: "Ce site est conçu pour positionner un dirigeant technologie et engineering autour de trois axes clairs : leadership engineering, systèmes distribués et transformation organisationnelle à l’échelle. Le ton est volontairement concis, direct et techniquement crédible.",
+        tag_scale: "Engineering at Scale",
+        tag_distributed: "Systèmes distribués",
+        footer_left: "Systèmes distribués · Scale · IA · Transformation organisationnelle",
+        footer_right: "Les derniers documents sont disponibles directement depuis cette page."
+      },
+      en: {
+        nav_about: "About",
+        nav_experience: "Experience",
+        nav_contact: "Contact",
+        eyebrow: "Technology & Engineering Executive",
+        hero_title: "Engineering at Scale.",
+        hero_subtitle: "Leadership of large-scale engineering organizations, distributed systems and organizational transformation in complex regulated environments.",
+        metric_teams: "Teams",
+        metric_engineers: "Engineers",
+        metric_predictability: "Delivery predictability",
+        metric_efficiency: "Efficiency improvement",
+        cta_contact: "Get in touch",
+        cta_cv_fr: "Download CV FR",
+        cta_resume_en: "Download Resume EN",
+        profile_role: "CTO / VP Engineering · Distributed Systems · Organizational Design · Large-Scale Transformation",
+        linkedin_label: "Professional profile",
+        contact_link_title: "Private contact form",
+        contact_link_copy: "Email and phone kept off the public page",
+        signal_1_title: "Current scope",
+        signal_1_value: "Global hybrid cloud platform",
+        signal_1_copy: "Large-scale execution across platform, security and IAM domains in a regulated banking environment.",
+        signal_2_title: "Core angle",
+        signal_2_value: "Distributed Systems & AI",
+        signal_2_copy: "Engineering scale, reusable operating models and pragmatic technical depth.",
+        about_kicker: "About",
+        about_title: "Executive leadership with real engineering depth.",
+        about_copy: "I am a technology and engineering executive with 20+ years of experience leading large-scale engineering organizations and complex transformation programs in regulated environments. I currently lead engineering execution for Société Générale’s global hybrid cloud platform across more than 70 teams and around 600 engineers, supporting thousands of enterprise applications across private cloud, AWS and Azure.",
+        skill_1: "Engineering Leadership",
+        skill_2: "Distributed Systems",
+        skill_3: "Organizational Design",
+        skill_4: "Large-Scale Transformation",
+        skill_5: "Systems Thinking",
+        impact_kicker: "Impact",
+        impact_title: "What I optimize at scale.",
+        impact_copy: "My work focuses on designing operating models, coordination frameworks and execution patterns that allow large engineering organizations to scale predictably without losing technical depth. Alongside leadership responsibilities, I keep a hands-on engineering practice through applied AI pipelines, reverse engineering and performance engineering projects.",
+        exp_kicker: "Experience",
+        exp_title: "Selected trajectory.",
+        job1_role: "Program Delivery Lead — SG Cloud Platform, Security & IAM",
+        job1_meta: "Société Générale · 2019–Present",
+        job1_b1: "Engineering execution leadership across 70+ teams (~600 engineers) supporting thousands of enterprise applications.",
+        job1_b2: "Global hybrid cloud platform at enterprise scale across private cloud, AWS and Azure.",
+        job1_b3: "~90% delivery predictability, ~45% efficiency improvement and ~95% reduction of recurring coordination overhead.",
+        job2_role: "Chief Information Officer",
+        job2_meta: "Finaxys · 2016–2019",
+        job2_b1: "Led technology delivery in Big Data and DevOps environments for Tier-1 banking clients.",
+        job2_b2: "Built engineering guilds and an academy supporting ~350 consultants.",
+        job3_role: "Chief Technical Officer",
+        job3_meta: "Meritis · 2016",
+        job3_b1: "Designed engineering recruitment frameworks, learning platforms and company-wide technical excellence programs.",
+        projects_kicker: "Technical edge",
+        projects_title: "Hands-on projects that still shape my leadership.",
+        proj1: "Scalable image and video enhancement workflows using modern AI super-resolution models.",
+        proj2: "5,000+ hours of reverse engineering, tooling and long-term ecosystem modernization.",
+        proj3: "Performance engineering tooling adopted by thousands of users.",
+        contact_kicker: "Contact",
+        contact_title: "Private contact, public signal.",
+        contact_copy: "Use the form below to get in touch. Email address and phone number are intentionally not exposed on the public page. For a full profile, references and role details, LinkedIn remains the best entry point.",
+        form_name: "Name",
+        form_company: "Company / context",
+        form_message: "Your message",
+        form_submit: "Send",
+        download_fr: "CV FR",
+        download_en: "Resume EN",
+        form_note: "Replace the Formspree endpoint with your own form ID before publishing.",
+        why_kicker: "Signal",
+        why_title: "What this profile is optimized for.",
+        why_copy: "This site is designed to position a technology and engineering executive around three clear axes: engineering leadership, distributed systems, and organizational transformation at scale. It is intentionally concise, direct and technically credible.",
+        tag_scale: "Engineering at Scale",
+        tag_distributed: "Distributed Systems",
+        footer_left: "Distributed Systems · Scale · AI · Organizational Transformation",
+        footer_right: "Latest documents are available directly from this page."
+      }
+    };
+
+    const translatable = document.querySelectorAll('[data-i18n]');
+    const langButtons = {
+      fr: document.getElementById('lang-fr'),
+      en: document.getElementById('lang-en')
+    };
+
+    function setLanguage(lang) {
+      const dict = I18N[lang] || I18N.en;
+      document.documentElement.lang = lang;
+      localStorage.setItem('audric-lang', lang);
+      document.getElementById('formLanguage').value = lang;
+      translatable.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+      document.querySelectorAll('[data-placeholder-fr]').forEach(el => {
+        el.placeholder = lang === 'fr' ? el.dataset.placeholderFr : el.dataset.placeholderEn;
+      });
+      langButtons.fr.classList.toggle('active', lang === 'fr');
+      langButtons.en.classList.toggle('active', lang === 'en');
+    }
+
+    langButtons.fr.addEventListener('click', () => setLanguage('fr'));
+    langButtons.en.addEventListener('click', () => setLanguage('en'));
+    setLanguage(localStorage.getItem('audric-lang') || 'fr');
+
+    (function network() {
+      const canvas = document.getElementById('networkCanvas');
+      const ctx = canvas.getContext('2d');
+      let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const points = [];
+      const clusterCount = 52;
+      const staticSymbols = [
+        { type: 'text', text: 'π', x: 0.05, y: 0.48, r: 13 },
+        { type: 'text', text: 'λ', x: 0.245, y: 0.61, r: 14, invert: true },
+        { type: 'dice', x: 0.304, y: 0.545, size: 20 }
+      ];
+
+      function resize() {
+        w = canvas.clientWidth = window.innerWidth;
+        h = canvas.clientHeight = window.innerHeight;
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        build();
+      }
+
+      function build() {
+        points.length = 0;
+        const activeW = Math.min(w * 0.46, 620);
+        const activeH = Math.min(h * 0.9, 920);
+        for (let i = 0; i < clusterCount; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const radius = Math.pow(Math.random(), 0.75);
+          const px = activeW * (0.08 + 0.86 * radius * Math.cos(angle) * 0.5 + 0.34);
+          const py = activeH * (0.08 + 0.86 * radius * Math.sin(angle) * 0.5 + 0.42);
+          points.push({
+            x: Math.max(18, Math.min(activeW - 10, px)),
+            y: Math.max(10, Math.min(h - 30, py)),
+            r: Math.random() > 0.84 ? 4.8 : Math.random() > 0.52 ? 3.2 : 2.2,
+            glow: Math.random() > 0.92,
+            seed: Math.random() * 1000
+          });
+        }
+
+        points.push({ x: activeW * 0.17, y: h * 0.32, r: 11, glow: true, seed: 11 });
+        points.push({ x: activeW * 0.08, y: h * 0.58, r: 12, glow: true, seed: 12 });
+        points.push({ x: activeW * 0.37, y: h * 0.46, r: 13, glow: true, seed: 13 });
+      }
+
+      function pencilLine(x1, y1, x2, y2) {
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const dist = Math.hypot(dx, dy);
+        const jitterCount = 2;
+        for (let j = 0; j < jitterCount; j++) {
+          ctx.beginPath();
+          const ox = (Math.random() - 0.5) * 0.9;
+          const oy = (Math.random() - 0.5) * 0.9;
+          ctx.moveTo(x1 + ox, y1 + oy);
+          const steps = Math.max(4, Math.floor(dist / 24));
+          for (let i = 1; i <= steps; i++) {
+            const t = i / steps;
+            const nx = x1 + dx * t + (Math.random() - 0.5) * 1.8;
+            const ny = y1 + dy * t + (Math.random() - 0.5) * 1.8;
+            ctx.lineTo(nx, ny);
+          }
+          ctx.strokeStyle = j === 0 ? 'rgba(12,12,12,0.24)' : 'rgba(12,12,12,0.12)';
+          ctx.lineWidth = j === 0 ? 0.9 : 0.6;
+          ctx.stroke();
+        }
+      }
+
+      function drawDice(x, y, size) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.strokeStyle = 'rgba(17,17,17,0.38)';
+        ctx.fillStyle = 'rgba(255,255,255,0.86)';
+        ctx.lineWidth = 0.9;
+        const s = size;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(s * 0.72, -s * 0.25);
+        ctx.lineTo(s * 0.72, s * 0.48);
+        ctx.lineTo(0, s * 0.72);
+        ctx.closePath();
+        ctx.fill(); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-s * 0.45, -s * 0.24);
+        ctx.lineTo(-s * 0.45, s * 0.48);
+        ctx.lineTo(0, s * 0.72);
+        ctx.closePath();
+        ctx.fill(); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-s * 0.45, -s * 0.24);
+        ctx.lineTo(s * 0.26, -s * 0.5);
+        ctx.lineTo(s * 0.72, -s * 0.25);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(255,255,255,0.96)';
+        ctx.fill(); ctx.stroke();
+        const pip = (px, py) => {
+          ctx.beginPath();
+          ctx.arc(px, py, s * 0.065, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(17,17,17,0.72)';
+          ctx.fill();
+        };
+        pip(-s*0.32, -s*0.09); pip(-s*0.13, -s*0.16); pip(-s*0.32, s*0.25); pip(-s*0.13, s*0.18);
+        pip(s*0.28, 0); pip(s*0.45, s*0.26);
+        ctx.restore();
+      }
+
+      function drawSymbols() {
+        staticSymbols.forEach(sym => {
+          const x = w * sym.x;
+          const y = h * sym.y;
+          if (sym.type === 'text') {
+            if (sym.invert) {
+              ctx.beginPath();
+              ctx.arc(x, y, sym.r, 0, Math.PI * 2);
+              ctx.fillStyle = 'rgba(17,17,17,0.66)';
+              ctx.fill();
+              ctx.fillStyle = 'rgba(255,255,255,0.96)';
+            } else {
+              ctx.fillStyle = 'rgba(17,17,17,0.66)';
+            }
+            ctx.font = `${sym.r * 1.45}px Georgia, serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(sym.text, x, y + 0.5);
+          } else if (sym.type === 'dice') {
+            drawDice(x, y, sym.size);
+          }
+        });
+      }
+
+      function render() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < points.length; i++) {
+          const a = points[i];
+          for (let j = i + 1; j < points.length; j++) {
+            const b = points[j];
+            const d = Math.hypot(a.x - b.x, a.y - b.y);
+            if (d < 145) pencilLine(a.x, a.y, b.x, b.y);
+          }
+        }
+
+        for (const p of points) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(17,17,17,0.42)';
+          ctx.fill();
+          if (p.glow) {
+            const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 5.5);
+            g.addColorStop(0, 'rgba(255,255,255,0.95)');
+            g.addColorStop(0.22, 'rgba(255,255,255,0.42)');
+            g.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.beginPath();
+            ctx.fillStyle = g;
+            ctx.arc(p.x, p.y, p.r * 5.5, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        for (let i = 0; i < 80; i++) {
+          ctx.beginPath();
+          ctx.arc(Math.random() * Math.min(w * 0.48, 680), Math.random() * h, Math.random() * 1.4 + 0.2, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(17,17,17,0.08)';
+          ctx.fill();
+        }
+
+        drawSymbols();
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      render();
+    })();
+  </script>
+</body>
+</html>
